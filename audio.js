@@ -5,6 +5,7 @@ export let analyser;
 export const fxNodes = { delay: {}, reverb: {}, vibrato: {}, filter: {}, stutter: {}, tapestop: {} };
 export const trackSends = [[], [], [], []];
 export const trackAnalysers = [];
+export const trackMasterGains = [];
 const REVERB_CROSSFADE_SEC = 0.08;
 const MASTER_LIMITER_SETTINGS = Object.freeze({
     threshold: -2.5,
@@ -192,6 +193,9 @@ export function initAudio(tracks, updateRoutingCallback) {
         // Analyser für diesen Track erstellen (für die LEDs)
         trackAnalysers[i] = audioCtx.createAnalyser();
         trackAnalysers[i].fftSize = 256;
+        trackMasterGains[i] = audioCtx.createGain();
+        trackMasterGains[i].gain.value = 1.0;
+        t.masterGainNode = trackMasterGains[i];
 
         trackSends[i] = {
             dry: audioCtx.createGain(),
@@ -210,6 +214,15 @@ export function initAudio(tracks, updateRoutingCallback) {
         trackSends[i].filter.gain.value = 0;
         trackSends[i].stutter.gain.value = 0;
         trackSends[i].tapestop.gain.value = 0;
+
+        // Routing: Track master -> sends -> analyser/master
+        trackMasterGains[i].connect(trackSends[i].dry);
+        trackMasterGains[i].connect(trackSends[i].delay);
+        trackMasterGains[i].connect(trackSends[i].reverb);
+        trackMasterGains[i].connect(trackSends[i].vibrato);
+        trackMasterGains[i].connect(trackSends[i].filter);
+        trackMasterGains[i].connect(trackSends[i].stutter);
+        trackMasterGains[i].connect(trackSends[i].tapestop);
 
         // Routing: Das Dry-Signal geht erst in den Analyser und von dort in den Master
         trackSends[i].dry.connect(trackAnalysers[i]);
@@ -271,19 +284,13 @@ export function updateReverbDecay(decayVal) {
 }
 
 export function connectTrackToFX(trackGain, index) {
-    if (!audioCtx || !trackSends[index]) return;
-    trackGain.connect(trackSends[index].dry); 
-    trackGain.connect(trackSends[index].delay);
-    trackGain.connect(trackSends[index].reverb);
-    trackGain.connect(trackSends[index].vibrato);
-    trackGain.connect(trackSends[index].filter);
-    trackGain.connect(trackSends[index].stutter);
-    trackGain.connect(trackSends[index].tapestop);
+    if (!audioCtx || !trackMasterGains[index]) return;
+    trackGain.connect(trackMasterGains[index]);
 }
 
 export function updateTrackVolume(track) {
-    if (track.gainNode && audioCtx) {
-        track.gainNode.gain.setTargetAtTime(track.mute ? 0 : track.vol, audioCtx.currentTime, 0.05);
+    if (track.masterGainNode && audioCtx) {
+        track.masterGainNode.gain.setTargetAtTime(track.mute ? 0 : track.vol, audioCtx.currentTime, 0.05);
     }
 }
 

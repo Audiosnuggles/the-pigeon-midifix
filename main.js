@@ -25,36 +25,79 @@ let lastTraceTrackX = null;
 let isExportingWav = false;
 let playbackPathMode = "x";
 const HISTORY_STACK_LIMIT = 25;
+let currentLiveScene = null;
+let scheduledLiveScene = null;
 
 function clearNextLoopSchedule() {
     nextLoopScheduledFor = null;
     nextLoopScheduledBoundaryId = null;
 }
 
+function disconnectSceneNode(node) {
+    if (!node) return;
+    try { node.disconnect(); } catch (e) {}
+}
+
+function clearTrackSceneRefs(sceneKey) {
+    tracks.forEach(track => {
+        track[sceneKey] = null;
+    });
+}
+
+function disconnectLiveScene(scene) {
+    if (!scene || !Array.isArray(scene.trackGains)) return;
+    scene.trackGains.forEach(disconnectSceneNode);
+}
+
+function assignCurrentLiveScene(scene) {
+    if (currentLiveScene && currentLiveScene !== scene) {
+        disconnectLiveScene(currentLiveScene);
+    }
+    currentLiveScene = scene || null;
+    tracks.forEach((track, idx) => {
+        track.gainNode = scene?.trackGains?.[idx] || null;
+    });
+}
+
+function assignScheduledLiveScene(scene) {
+    if (scheduledLiveScene && scheduledLiveScene !== scene) {
+        disconnectLiveScene(scheduledLiveScene);
+    }
+    scheduledLiveScene = scene || null;
+    tracks.forEach((track, idx) => {
+        track.scheduledGainNode = scene?.trackGains?.[idx] || null;
+    });
+}
+
 function killPreScheduledFutureTrackGraph() {
+    if (scheduledLiveScene) {
+        disconnectLiveScene(scheduledLiveScene);
+        scheduledLiveScene = null;
+        clearTrackSceneRefs("scheduledGainNode");
+        return;
+    }
     if (nextLoopScheduledFor === null) return;
     tracks.forEach(track => {
-        if (track?.scheduledGainNode) {
-            try { track.scheduledGainNode.disconnect(); } catch (e) {}
-            track.scheduledGainNode = null;
-            track.scheduledGainStartTime = NaN;
-            return;
-        }
-        if (!track?.gainNode) return;
-        try { track.gainNode.disconnect(); } catch (e) {}
-        track.gainNode = null;
+        if (!track?.scheduledGainNode) return;
+        disconnectSceneNode(track.scheduledGainNode);
+        track.scheduledGainNode = null;
     });
 }
 
 function promoteScheduledTrackGraph() {
+    if (scheduledLiveScene) {
+        assignCurrentLiveScene(scheduledLiveScene);
+        scheduledLiveScene = null;
+        clearTrackSceneRefs("scheduledGainNode");
+        return;
+    }
     tracks.forEach(track => {
         if (!track?.scheduledGainNode) return;
         if (track.gainNode && track.gainNode !== track.scheduledGainNode) {
-            try { track.gainNode.disconnect(); } catch (e) {}
+            disconnectSceneNode(track.gainNode);
         }
         track.gainNode = track.scheduledGainNode;
         track.scheduledGainNode = null;
-        track.scheduledGainStartTime = NaN;
     });
 }
 
@@ -324,7 +367,7 @@ let quoteHoverAudio = null;
 
 const tracks = Array.from(document.querySelectorAll(".track-container")).map((c, i) => ({
     index: i, canvas: c.querySelector("canvas"), ctx: c.querySelector("canvas").getContext("2d"),
-    segments: [], wave: "sine", mute: false, solo: false, bp: false, vol: 0.8, snap: false, noiseQ: 6, lengthSteps: 32, gridSteps: 32, gainNode: null, curSeg: null, particleBus: null,
+    segments: [], wave: "sine", mute: false, solo: false, bp: false, vol: 0.8, snap: false, noiseQ: 6, lengthSteps: 32, gridSteps: 32, gainNode: null, scheduledGainNode: null, masterGainNode: null, curSeg: null, particleBus: null,
     selectedSegments: [], selectionBox: null 
 }));
 
@@ -816,7 +859,7 @@ function scheduleUpcomingLoopIfNeeded(force = false) {
         const safeStart = Math.max(nextStart, audioCtx.currentTime + 0.003);
         const queuedSnapshot = getQueuedPlaybackSnapshot();
         const phaseAnchorTime = queuedSnapshot ? nextStart : transportStartTime;
-        scheduleTracks(safeStart, audioCtx, masterGain, null, queuedSnapshot || getActivePlaybackSnapshot(), phaseAnchorTime);
+        scheduleTracks(safeStart, audioCtx, masterGain, null, queuedSnapshot || getActivePlaybackSnapshot(), phaseAnchorTime, "scheduled", boundaryInfo.id);
         nextLoopScheduledFor = nextStart;
         nextLoopScheduledBoundaryId = boundaryInfo.id;
     }
@@ -2223,11 +2266,8 @@ function applyAllVolumes() {
     const anySolo = tracks.some(tr => tr.solo);
     tracks.forEach(tr => {
         const isAudible = anySolo ? tr.solo : !tr.mute;
-        if (tr.gainNode) {
-            tr.gainNode.gain.setTargetAtTime(isAudible ? tr.vol : 0, audioCtx.currentTime, 0.05);
-        }
-        if (tr.particleBus && tr.particleBus.trackGain) {
-            tr.particleBus.trackGain.gain.setTargetAtTime(isAudible ? tr.vol : 0, audioCtx.currentTime, 0.05);
+        if (tr.masterGainNode) {
+            tr.masterGainNode.gain.setTargetAtTime(isAudible ? tr.vol : 0, audioCtx.currentTime, 0.05);
         }
     });
 }
@@ -2238,6 +2278,7 @@ function ensureParticleBus(track) {
 
     const input = audioCtx.createGain();
     const trackGain = audioCtx.createGain();
+    trackGain.gain.value = 1.0;
     input.connect(trackGain);
     connectTrackToFX(trackGain, track.index);
 
@@ -2607,7 +2648,7 @@ function startLiveSynth(track, x, y) {
     });
     
     const trackG = audioCtx.createGain(); 
-    trackG.gain.value = track.vol;
+    trackG.gain.value = 1.0;
     liveGainNode.connect(trackG); 
     connectTrackToFX(trackG, track.index); 
     liveGainNode.out = trackG;
@@ -2749,7 +2790,7 @@ function triggerParticleGrain(track, y) {
     activeNodes.add(voice.source);
 }
 
-function scheduleTracks(start, targetCtx = audioCtx, targetDest = masterGain, offlineFX = null, playbackSnapshot = null, transportAnchorTime = null) {
+function scheduleTracks(start, targetCtx = audioCtx, targetDest = masterGain, offlineFX = null, playbackSnapshot = null, transportAnchorTime = null, sceneRole = null, sceneBoundaryId = null) {
     const playbackTracks = Array.isArray(playbackSnapshot?.tracks) && playbackSnapshot.tracks.length
         ? playbackSnapshot.tracks
         : tracks;
@@ -2767,11 +2808,14 @@ function scheduleTracks(start, targetCtx = audioCtx, targetDest = masterGain, of
     const fractalChaos = Number(playbackSnapshot?.fx?.fractal?.chaos);
     const resolvedFractalChaos = Number.isFinite(fractalChaos) ? fractalChaos : readModifierKnob("fractal-chaos", 0);
     const anySolo = playbackTracks.some(tr => tr.solo);
+    const liveScene = (targetCtx === audioCtx && sceneRole)
+        ? { role: sceneRole, boundaryId: sceneBoundaryId || null, startTime: start, trackGains: new Array(tracks.length).fill(null) }
+        : null;
 
     playbackTracks.forEach((track, trackIndex) => {
         const outputTrackIndex = Number.isFinite(track?.index) ? track.index : trackIndex;
         const trkG = targetCtx.createGain(); 
-        trkG.gain.value = (track.mute || (anySolo && !track.solo)) ? 0 : track.vol;
+        trkG.gain.value = 1.0;
         let sharedParticleNoiseFilter = null;
         // Tolerances for loop seam continuity: live tracing rarely lands exactly on x=0/750.
         const seamStartThreshold = 12;
@@ -2794,18 +2838,7 @@ function scheduleTracks(start, targetCtx = audioCtx, targetDest = masterGain, of
             && segmentExtents.some(ext => ext.maxX >= seamEndThreshold);
         
         if (targetCtx === audioCtx) { 
-            if (track === tracks[outputTrackIndex]) {
-                const isFutureGraph = Number.isFinite(start) && Number.isFinite(audioCtx?.currentTime) && start > (audioCtx.currentTime + 0.02);
-                if (isFutureGraph) {
-                    if (track.scheduledGainNode && track.scheduledGainNode !== trkG) {
-                        try { track.scheduledGainNode.disconnect(); } catch (e) {}
-                    }
-                    track.scheduledGainNode = trkG;
-                    track.scheduledGainStartTime = start;
-                } else {
-                    track.gainNode = trkG;
-                }
-            }
+            if (liveScene) liveScene.trackGains[outputTrackIndex] = trkG;
             connectTrackToFX(trkG, outputTrackIndex); 
         } else if (offlineFX) { 
             const isBypassed = !!track.bp;
@@ -3135,6 +3168,12 @@ function scheduleTracks(start, targetCtx = audioCtx, targetDest = masterGain, of
             });
         }
     });
+
+    if (liveScene) {
+        if (sceneRole === "scheduled") assignScheduledLiveScene(liveScene);
+        else if (sceneRole === "current") assignCurrentLiveScene(liveScene);
+        return liveScene;
+    }
 }
 
 // SETUP DRAWING (inkl. MARQUEE SELECTION, SHIFT-TOGGLE, ALT-CLONE & GRID-SNAP)
@@ -3527,6 +3566,7 @@ function setupMainControls() {
             if (!isPlaying) {
                 initAudio(tracks, updateRoutingFromUI); 
                 applyAllFXFromUI(); 
+                applyAllVolumes();
                 if (audioCtx.state === "suspended") audioCtx.resume();
                 updatePlaybackDuration();
                 updateActiveMidiLoopSpan(getGlobalLengthSteps());
@@ -3543,7 +3583,7 @@ function setupMainControls() {
                 activeWaveShapers = []; 
                 clearNextLoopSchedule();
                 lastProcessedBoundaryId = null;
-                scheduleTracks(playbackStartTime, audioCtx, masterGain, null, getActivePlaybackSnapshot(), transportStartTime); 
+                scheduleTracks(playbackStartTime, audioCtx, masterGain, null, getActivePlaybackSnapshot(), transportStartTime, "current", null); 
                 timerWorker.postMessage('start');
             }
         },
@@ -3764,6 +3804,7 @@ function setupMainControls() {
         document.getElementById("playButton").classList.add("is-active-ui");
         initAudio(tracks, updateRoutingFromUI); 
         applyAllFXFromUI(); 
+        applyAllVolumes();
         if (audioCtx.state === "suspended") audioCtx.resume();
         updatePlaybackDuration();
         updateActiveMidiLoopSpan(getGlobalLengthSteps());
@@ -3773,7 +3814,7 @@ function setupMainControls() {
         activeWaveShapers = []; 
         clearNextLoopSchedule();
         lastProcessedBoundaryId = null;
-        scheduleTracks(playbackStartTime, audioCtx, masterGain, null, null, transportStartTime); 
+        scheduleTracks(playbackStartTime, audioCtx, masterGain, null, null, transportStartTime, "current", null); 
         timerWorker.postMessage('start');
     });
     
@@ -3789,12 +3830,13 @@ function setupMainControls() {
         activeNodes.forEach(n => { try { n.stop(); n.disconnect(); } catch (e) { } });
         activeNodes.clear(); 
         activeWaveShapers = []; 
+        disconnectLiveScene(currentLiveScene);
+        disconnectLiveScene(scheduledLiveScene);
+        currentLiveScene = null;
+        scheduledLiveScene = null;
         tracks.forEach(t => {
-            if (t.gainNode) t.gainNode.disconnect();
-            if (t.scheduledGainNode) t.scheduledGainNode.disconnect();
             t.gainNode = null;
             t.scheduledGainNode = null;
-            t.scheduledGainStartTime = NaN;
             redrawTrack(t, undefined, brushSelect.value, chordIntervals, chordColors);
         });
         pigeonImg.style.transform = "scale(1)"; 
@@ -4206,7 +4248,9 @@ function loop() {
                     masterGain,
                     null,
                     getActivePlaybackSnapshot(),
-                    transportStartTime
+                    transportStartTime,
+                    "current",
+                    boundaryId
                 );
             }
             scheduleUpcomingLoopIfNeeded(true);
