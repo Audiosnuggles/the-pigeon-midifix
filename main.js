@@ -788,13 +788,27 @@ function getUpcomingLoopBoundaryTime() {
     return getUpcomingLoopBoundaryInfo()?.time ?? null;
 }
 
+function getBoundaryProcessKey(boundaryInfo, boundaryId = null) {
+    if (Number.isFinite(boundaryInfo?.boundaryTick)) {
+        return `midi-tick:${Math.round(boundaryInfo.boundaryTick)}`;
+    }
+    const rawId = String(boundaryId || boundaryInfo?.id || "");
+    if (rawId.startsWith("midi:")) {
+        const parts = rawId.split(":");
+        const tick = Number(parts[parts.length - 1]);
+        if (Number.isFinite(tick)) return `midi-tick:${Math.round(tick)}`;
+    }
+    return rawId || null;
+}
+
 function scheduleUpcomingLoopIfNeeded(force = false) {
     if (!isPlaying || !audioCtx || !isFinite(playbackDuration) || playbackDuration <= 0) return;
     if (isTracing && !isEffectMode) return;
     const boundaryInfo = getUpcomingLoopBoundaryInfo();
     const nextStart = boundaryInfo?.time;
     if (!Number.isFinite(nextStart) || !boundaryInfo?.id) return;
-    if (boundaryInfo.id === lastProcessedBoundaryId) return;
+    const boundaryProcessKey = getBoundaryProcessKey(boundaryInfo, boundaryInfo.id);
+    if (boundaryProcessKey && boundaryProcessKey === lastProcessedBoundaryId) return;
     const alreadyScheduled = nextLoopScheduledFor !== null && nextLoopScheduledBoundaryId === boundaryInfo.id;
     if (alreadyScheduled) return;
     const timeUntilNext = nextStart - audioCtx.currentTime;
@@ -4141,8 +4155,9 @@ function loop() {
     const boundaryInfo = getUpcomingLoopBoundaryInfo();
     const boundaryTime = nextLoopScheduledFor !== null ? nextLoopScheduledFor : boundaryInfo?.time;
     const boundaryId = nextLoopScheduledBoundaryId !== null ? nextLoopScheduledBoundaryId : boundaryInfo?.id;
+    const boundaryProcessKey = getBoundaryProcessKey(boundaryInfo, boundaryId);
     const boundaryReached = Number.isFinite(boundaryTime)
-        ? (audioCtx.currentTime >= (boundaryTime - (midiSyncActive ? 0.002 : 0))) && (boundaryId !== lastProcessedBoundaryId)
+        ? (audioCtx.currentTime >= (boundaryTime - (midiSyncActive ? 0.002 : 0))) && (boundaryProcessKey !== lastProcessedBoundaryId)
         : (elapsed >= playbackDuration);
 
     if (boundaryReached) {
@@ -4169,7 +4184,7 @@ function loop() {
             patternChangedAtBoundary = true;
         }
         if (document.getElementById("loopCheckbox").checked) { 
-            if (boundaryId) lastProcessedBoundaryId = boundaryId;
+            if (boundaryProcessKey) lastProcessedBoundaryId = boundaryProcessKey;
             playbackStartTime = Number.isFinite(boundaryTime) ? boundaryTime : (playbackStartTime + oldDuration);
             if (patternChangedAtBoundary) transportStartTime = playbackStartTime;
             if (midiSyncActive && Number.isFinite(boundaryTick)) {
