@@ -15,9 +15,10 @@ let slotTargetPicker = null;
 let isPlaying = false, playbackStartTime = 0, transportStartTime = 0, playbackDuration = 0;
 let nextLoopScheduledFor = null;
 let nextLoopScheduledBoundaryId = null;
+let lastProcessedBoundaryId = null;
 let activeMidiLoopTickSpan = 0;
 let midiLoopAnchorTick = NaN;
-const LOOP_SCHEDULE_AHEAD_SEC = 0.05;
+const LOOP_SCHEDULE_AHEAD_SEC = 0.15;
 let undoStack = [], redoStack = [], liveNodes = [], liveGainNode = null, activeNodes = new Set(), lastAvg = 0;
 let currentTargetTrack = 0, traceCurrentY = 50, isTracing = false, isEffectMode = false, traceCurrentSeg = null, queuedPattern = null, queuedPresetBank = null;
 let lastTraceTrackX = null;
@@ -739,8 +740,9 @@ function getNextExternalBoundaryInfo() {
     if (!Number.isFinite(lastTickAudioTime)) return null;
     const loopTickSpan = getActiveMidiLoopTickSpan();
     const absoluteTickCount = Math.max(0, Number(midiState.absoluteTickCount) || 0);
-    const ticksSinceAnchor = Math.max(0, absoluteTickCount - Math.max(0, Math.round(Number(midiLoopAnchorTick) || 0)));
-    const remainder = ticksSinceAnchor % loopTickSpan;
+    const anchor = Math.max(0, Math.round(Number(midiLoopAnchorTick) || 0));
+    const ticksSinceAnchor = absoluteTickCount - anchor;
+    const remainder = ((ticksSinceAnchor % loopTickSpan) + loopTickSpan) % loopTickSpan;
     const ticksUntilBoundary = remainder === 0 ? loopTickSpan : (loopTickSpan - remainder);
     const boundaryTick = absoluteTickCount + ticksUntilBoundary;
     return {
@@ -774,6 +776,7 @@ function scheduleUpcomingLoopIfNeeded(force = false) {
     const boundaryInfo = getUpcomingLoopBoundaryInfo();
     const nextStart = boundaryInfo?.time;
     if (!Number.isFinite(nextStart) || !boundaryInfo?.id) return;
+    if (boundaryInfo.id === lastProcessedBoundaryId) return;
     const alreadyScheduled = nextLoopScheduledFor !== null && nextLoopScheduledBoundaryId === boundaryInfo.id;
     if (alreadyScheduled) return;
     const timeUntilNext = nextStart - audioCtx.currentTime;
@@ -3498,6 +3501,7 @@ function setupMainControls() {
                 isPlaying = true; 
                 activeWaveShapers = []; 
                 clearNextLoopSchedule();
+                lastProcessedBoundaryId = null;
                 scheduleTracks(playbackStartTime, audioCtx, masterGain, null, getActivePlaybackSnapshot(), transportStartTime); 
                 timerWorker.postMessage('start');
             }
@@ -3727,6 +3731,7 @@ function setupMainControls() {
         isPlaying = true; 
         activeWaveShapers = []; 
         clearNextLoopSchedule();
+        lastProcessedBoundaryId = null;
         scheduleTracks(playbackStartTime, audioCtx, masterGain, null, null, transportStartTime); 
         timerWorker.postMessage('start');
     });
@@ -3737,6 +3742,7 @@ function setupMainControls() {
         isPlaying = false; 
         timerWorker.postMessage('stop');
         clearNextLoopSchedule();
+        lastProcessedBoundaryId = null;
         queuedPattern = null;
         queuedPresetBank = null;
         activeNodes.forEach(n => { try { n.stop(); n.disconnect(); } catch (e) { } });
@@ -4102,7 +4108,7 @@ function loop() {
     const boundaryTime = nextLoopScheduledFor !== null ? nextLoopScheduledFor : boundaryInfo?.time;
     const boundaryId = nextLoopScheduledBoundaryId !== null ? nextLoopScheduledBoundaryId : boundaryInfo?.id;
     const boundaryReached = Number.isFinite(boundaryTime)
-        ? (audioCtx.currentTime >= (boundaryTime - (midiSyncActive ? 0.002 : 0)))
+        ? (audioCtx.currentTime >= (boundaryTime - (midiSyncActive ? 0.002 : 0))) && (boundaryId !== lastProcessedBoundaryId)
         : (elapsed >= playbackDuration);
 
     if (boundaryReached) {
@@ -4129,6 +4135,7 @@ function loop() {
             patternChangedAtBoundary = true;
         }
         if (document.getElementById("loopCheckbox").checked) { 
+            if (boundaryId) lastProcessedBoundaryId = boundaryId;
             playbackStartTime = Number.isFinite(boundaryTime) ? boundaryTime : (playbackStartTime + oldDuration);
             if (patternChangedAtBoundary) transportStartTime = playbackStartTime;
             if (midiSyncActive && Number.isFinite(boundaryTick)) {
@@ -4148,9 +4155,7 @@ function loop() {
                     transportStartTime
                 );
             }
-            if (patternChangedAtBoundary) {
-                scheduleUpcomingLoopIfNeeded(true);
-            }
+            scheduleUpcomingLoopIfNeeded(true);
             if (isTracing && traceCurrentSeg) { saveState(); traceCurrentSeg = { points: [], ...buildSegmentMeta(brushSelect.value) }; tracks[currentTargetTrack].segments.push(traceCurrentSeg); } 
         } else {
             isPlaying = false;
