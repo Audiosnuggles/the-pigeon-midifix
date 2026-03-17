@@ -12,7 +12,7 @@ const PATTERN_SLOTS_PER_BANK = 4;
 let patternBanks = { A: [null, null, null, null], B: [null, null, null, null], C: [null, null, null, null], D: [null, null, null, null] };
 let activePatternSlot = { bank: "A", idx: 0 };
 let slotTargetPicker = null;
-let isPlaying = false, playbackStartTime = 0, playbackDuration = 0;
+let isPlaying = false, playbackStartTime = 0, transportStartTime = 0, playbackDuration = 0;
 let nextLoopScheduledFor = null;
 let nextLoopScheduledBoundaryId = null;
 let activeMidiLoopTickSpan = 0;
@@ -572,6 +572,12 @@ function getTrackDuration(track, baseLoopDuration = playbackDuration, globalStep
     return stepDuration * trackSteps;
 }
 
+function getTransportElapsedTime(now = audioCtx?.currentTime ?? 0) {
+    if (!Number.isFinite(now)) return 0;
+    const anchor = Number.isFinite(transportStartTime) ? transportStartTime : playbackStartTime;
+    return now - anchor;
+}
+
 function getTrackHeadX(track, elapsed) {
     const d = getTrackDuration(track);
     if (!isFinite(d) || d <= 0) return 0;
@@ -753,7 +759,7 @@ function getUpcomingLoopBoundaryTime() {
     return getUpcomingLoopBoundaryInfo()?.time ?? null;
 }
 
-function scheduleUpcomingLoopIfNeeded() {
+function scheduleUpcomingLoopIfNeeded(force = false) {
     if (!isPlaying || !audioCtx || !isFinite(playbackDuration) || playbackDuration <= 0) return;
     if (isTracing && !isEffectMode) return;
     const boundaryInfo = getUpcomingLoopBoundaryInfo();
@@ -762,10 +768,11 @@ function scheduleUpcomingLoopIfNeeded() {
     const alreadyScheduled = nextLoopScheduledFor !== null && nextLoopScheduledBoundaryId === boundaryInfo.id;
     if (alreadyScheduled) return;
     const timeUntilNext = nextStart - audioCtx.currentTime;
-    if (timeUntilNext <= LOOP_SCHEDULE_AHEAD_SEC) {
+    if (force || timeUntilNext <= LOOP_SCHEDULE_AHEAD_SEC) {
         const safeStart = Math.max(nextStart, audioCtx.currentTime + 0.003);
         const queuedSnapshot = getQueuedPlaybackSnapshot();
-        scheduleTracks(safeStart, audioCtx, masterGain, null, queuedSnapshot || getActivePlaybackSnapshot());
+        const phaseAnchorTime = queuedSnapshot ? nextStart : transportStartTime;
+        scheduleTracks(safeStart, audioCtx, masterGain, null, queuedSnapshot || getActivePlaybackSnapshot(), phaseAnchorTime);
         nextLoopScheduledFor = nextStart;
         nextLoopScheduledBoundaryId = boundaryInfo.id;
     }
@@ -2697,7 +2704,7 @@ function triggerParticleGrain(track, y) {
     activeNodes.add(voice.source);
 }
 
-function scheduleTracks(start, targetCtx = audioCtx, targetDest = masterGain, offlineFX = null, playbackSnapshot = null) {
+function scheduleTracks(start, targetCtx = audioCtx, targetDest = masterGain, offlineFX = null, playbackSnapshot = null, transportAnchorTime = null) {
     const playbackTracks = Array.isArray(playbackSnapshot?.tracks) && playbackSnapshot.tracks.length
         ? playbackSnapshot.tracks
         : tracks;
@@ -2770,8 +2777,14 @@ function scheduleTracks(start, targetCtx = audioCtx, targetDest = masterGain, of
         const trackDuration = getTrackDuration(track, localPlaybackDuration, localGlobalSteps);
         const globalEnd = start + localPlaybackDuration;
         if (!isFinite(trackDuration) || trackDuration <= 0) return;
+        const phaseAnchor = Number.isFinite(transportAnchorTime)
+            ? transportAnchorTime
+            : ((targetCtx === audioCtx && Number.isFinite(transportStartTime)) ? transportStartTime : start);
+        const firstCycleIndex = Math.floor((start - phaseAnchor) / trackDuration);
+        let firstCycleStart = phaseAnchor + (firstCycleIndex * trackDuration);
+        while ((firstCycleStart + trackDuration) <= start + 0.0001) firstCycleStart += trackDuration;
 
-        for (let cycleStart = start; cycleStart < globalEnd - 0.0001; cycleStart += trackDuration) {
+        for (let cycleStart = firstCycleStart; cycleStart < globalEnd - 0.0001; cycleStart += trackDuration) {
             track.segments.forEach(seg => {
                 const brush = seg.brush || "standard";
                 const explosionProfile = (brush === "explosion")
@@ -2793,11 +2806,11 @@ function scheduleTracks(start, targetCtx = audioCtx, targetDest = masterGain, of
                     const drawOffset = drawWindow.drawOffset;
                     const drawDuration = drawWindow.drawDuration;
                     particlePoints.forEach((p, pIndex) => {
-                        const rawT = drawOrderPlayback
-                            ? Math.max(0, cycleStart + drawOffset + ((ppCount > 1 ? (pIndex / (ppCount - 1)) : 0) * drawDuration))
-                            : Math.max(0, cycleStart + (p.x / 750) * trackDuration);
-                        const t = quantizeTrackTimeToGrid(track, cycleStart, rawT);
-                        if (t > globalEnd) return;
+                            const rawT = drawOrderPlayback
+                                ? Math.max(0, cycleStart + drawOffset + ((ppCount > 1 ? (pIndex / (ppCount - 1)) : 0) * drawDuration))
+                                : Math.max(0, cycleStart + (p.x / 750) * trackDuration);
+                            const t = quantizeTrackTimeToGrid(track, cycleStart, rawT);
+                            if (t < start - 0.0001 || t > globalEnd) return;
                         const env = targetCtx.createGain();
                         let f = mapYToFrequency(p.y, 100); if (harmonizeOn) f = quantizeFrequency(f, scaleMode);
                         const useSharedNoiseFilter = track.wave === "noise";
@@ -2897,7 +2910,7 @@ function scheduleTracks(start, targetCtx = audioCtx, targetDest = masterGain, of
                         const maxBranchDelay = (brush === "evolve" && evolveProfile) ? Math.max(...evolveProfile.branchDelays) : 0;
                         const sT = tfPairs[0].t + firstBranchDelay;
                         const eT = tfPairs[tfPairs.length - 1].t + maxBranchDelay + ((brush === "evolve" && evolveProfile) ? evolveProfile.branchSweepSec : 0);
-                        if (sT > globalEnd) return;
+                        if (sT > globalEnd || eT <= start) return;
 
                         let maxVol = (brush === "xenakis") ? 0.15 : (brush === "fractal" ? 0.2 : (brush === "rorschach" ? 0.2 : (brush === "overtone" ? 0.4 : (brush === "fm" ? 0.2 : 0.3))));
                         if (calligraphyAudioMod) maxVol *= calligraphyAudioMod.gainScale;
@@ -2993,6 +3006,53 @@ function scheduleTracks(start, targetCtx = audioCtx, targetDest = masterGain, of
                                 }
                             }
                         });
+
+                        const carryOverEligible = brush !== "evolve" && brush !== "explosion";
+                        const voiceStartAt = Math.max(sT, start);
+                        if (carryOverEligible && voiceStartAt > sT && tfPairs.length) {
+                            const afterIndex = tfPairs.findIndex(pair => pair.t >= voiceStartAt);
+                            const beforeIndex = afterIndex > 0 ? afterIndex - 1 : Math.max(0, tfPairs.length - 1);
+                            const prevPair = tfPairs[Math.max(0, beforeIndex)];
+                            const nextPair = afterIndex >= 0 ? tfPairs[afterIndex] : null;
+                            let prevFreq = prevPair.f;
+                            let nextFreq = nextPair ? nextPair.f : prevFreq;
+
+                            if (brush === "xenakis") {
+                                const offset = i - 2;
+                                const prevWaveMod = Math.sin(prevPair.cX * 0.04 + offset * 1.5);
+                                prevFreq = prevPair.f * Math.pow(2, (((offset * 0.05) + (prevWaveMod * 0.15)) / 12));
+                                if (nextPair) {
+                                    const nextWaveMod = Math.sin(nextPair.cX * 0.04 + offset * 1.5);
+                                    nextFreq = nextPair.f * Math.pow(2, (((offset * 0.05) + (nextWaveMod * 0.15)) / 12));
+                                }
+                            } else if (brush === "chord") {
+                                prevFreq = prevPair.f * Math.pow(2, iv / 12);
+                                nextFreq = nextPair ? (nextPair.f * Math.pow(2, iv / 12)) : prevFreq;
+                            } else if (brush === "overtone") {
+                                prevFreq = prevPair.f * iv;
+                                nextFreq = nextPair ? (nextPair.f * iv) : prevFreq;
+                            } else if (brush === "rorschach" && i === 1) {
+                                let mirroredY = 100 - prevPair.origY;
+                                prevFreq = mapYToFrequency(mirroredY, 100);
+                                if (harmonizeOn) prevFreq = quantizeFrequency(prevFreq, scaleMode);
+                                if (nextPair) {
+                                    let nextMirroredY = 100 - nextPair.origY;
+                                    nextFreq = mapYToFrequency(nextMirroredY, 100);
+                                    if (harmonizeOn) nextFreq = quantizeFrequency(nextFreq, scaleMode);
+                                } else {
+                                    nextFreq = prevFreq;
+                                }
+                            }
+
+                            let carryFreq = prevFreq;
+                            if (nextPair && nextPair !== prevPair && nextPair.t > prevPair.t && voiceStartAt > prevPair.t) {
+                                const ratio = Math.max(0, Math.min(1, (voiceStartAt - prevPair.t) / (nextPair.t - prevPair.t)));
+                                carryFreq = prevFreq + ((nextFreq - prevFreq) * ratio);
+                            }
+                            try { voice.setValueAtTime(carryFreq, voiceStartAt); } catch(e) {}
+                            g.gain.cancelScheduledValues(voiceStartAt);
+                            g.gain.setValueAtTime(maxVol, voiceStartAt);
+                        }
                         
                         voice.updateChaos = (newChaos) => {
                             if (brush !== "fractal") return;
@@ -3013,8 +3073,8 @@ function scheduleTracks(start, targetCtx = audioCtx, targetDest = masterGain, of
                             activeNodes.delete(voice.source);
                             disconnectCalligraphySkew();
                         };
-                        voice.source.start(sT); voice.source.stop(Math.min(eT + 0.2, globalEnd + 0.2)); 
-                        if (mod) { mod.start(sT); mod.stop(Math.min(eT + 0.2, globalEnd + 0.2)); }
+                        voice.source.start(voiceStartAt); voice.source.stop(Math.min(eT + 0.2, globalEnd + 0.2)); 
+                        if (mod) { mod.start(voiceStartAt); mod.stop(Math.min(eT + 0.2, globalEnd + 0.2)); }
                         if (targetCtx === audioCtx) activeNodes.add(voice.source);
                     });
                 }
@@ -3424,10 +3484,11 @@ function setupMainControls() {
                 }
                 const midiStartTime = midiTimestampMsToAudioTime(syncInfo?.timeStamp);
                 playbackStartTime = Math.max(Number.isFinite(midiStartTime) ? midiStartTime : audioCtx.currentTime, audioCtx.currentTime + 0.003); 
+                transportStartTime = playbackStartTime;
                 isPlaying = true; 
                 activeWaveShapers = []; 
                 clearNextLoopSchedule();
-                scheduleTracks(playbackStartTime, audioCtx, masterGain, null, getActivePlaybackSnapshot()); 
+                scheduleTracks(playbackStartTime, audioCtx, masterGain, null, getActivePlaybackSnapshot(), transportStartTime); 
                 timerWorker.postMessage('start');
             }
         },
@@ -3652,10 +3713,11 @@ function setupMainControls() {
         updatePlaybackDuration();
         updateActiveMidiLoopSpan(getGlobalLengthSteps());
         playbackStartTime = audioCtx.currentTime + 0.05; 
+        transportStartTime = playbackStartTime;
         isPlaying = true; 
         activeWaveShapers = []; 
         clearNextLoopSchedule();
-        scheduleTracks(playbackStartTime); 
+        scheduleTracks(playbackStartTime, audioCtx, masterGain, null, null, transportStartTime); 
         timerWorker.postMessage('start');
     });
     
@@ -3803,8 +3865,8 @@ function setupTracePad() {
         if (!audioCtx || !isPlaying) return 0;
         const targetTrack = tracks[currentTargetTrack];
         if (!targetTrack) return 0;
-        const elapsed = audioCtx.currentTime - playbackStartTime;
-        return getTrackHeadX(targetTrack, elapsed);
+        const transportElapsed = getTransportElapsedTime(audioCtx.currentTime);
+        return getTrackHeadX(targetTrack, transportElapsed);
     };
     
     tracePad.addEventListener("mouseenter", () => { if(crosshair) crosshair.style.display = "block"; });
@@ -4023,6 +4085,7 @@ function loop() {
     if (!isPlaying) return; 
     scheduleUpcomingLoopIfNeeded();
     let elapsed = audioCtx.currentTime - playbackStartTime;
+    let transportElapsed = getTransportElapsedTime(audioCtx.currentTime);
 
     const boundaryInfo = getUpcomingLoopBoundaryInfo();
     const boundaryTime = nextLoopScheduledFor !== null ? nextLoopScheduledFor : boundaryInfo?.time;
@@ -4034,6 +4097,7 @@ function loop() {
     if (boundaryReached) {
         const oldDuration = playbackDuration; 
         const boundaryTick = Number(boundaryInfo?.boundaryTick);
+        let patternChangedAtBoundary = false;
         const hadPreScheduledForBoundary = Number.isFinite(boundaryTime)
             && nextLoopScheduledFor !== null
             && nextLoopScheduledBoundaryId !== null
@@ -4044,20 +4108,24 @@ function loop() {
                 console.warn("Queued preset bank konnte nicht angewendet werden.");
             }
             queuedPresetBank = null;
+            patternChangedAtBoundary = true;
         }
         if (queuedPattern) {
             loadPatternData(queuedPattern.data);
             document.querySelectorAll(".pad").forEach(p => p.classList.remove("active", "queued"));
             queuedPattern.pad.classList.add("active");
             queuedPattern = null;
+            patternChangedAtBoundary = true;
         }
         if (document.getElementById("loopCheckbox").checked) { 
             playbackStartTime = Number.isFinite(boundaryTime) ? boundaryTime : (playbackStartTime + oldDuration);
+            if (patternChangedAtBoundary) transportStartTime = playbackStartTime;
             if (midiSyncActive && Number.isFinite(boundaryTick)) {
                 rebaseMidiLoopPhase(boundaryTick, getGlobalLengthSteps());
             }
             activeWaveShapers = [];
             elapsed = audioCtx.currentTime - playbackStartTime;
+            transportElapsed = getTransportElapsedTime(audioCtx.currentTime);
             clearNextLoopSchedule();
             if (!hadPreScheduledForBoundary) {
                 scheduleTracks(
@@ -4065,8 +4133,12 @@ function loop() {
                     audioCtx,
                     masterGain,
                     null,
-                    getActivePlaybackSnapshot()
+                    getActivePlaybackSnapshot(),
+                    transportStartTime
                 );
+            }
+            if (patternChangedAtBoundary) {
+                scheduleUpcomingLoopIfNeeded(true);
             }
             if (isTracing && traceCurrentSeg) { saveState(); traceCurrentSeg = { points: [], ...buildSegmentMeta(brushSelect.value) }; tracks[currentTargetTrack].segments.push(traceCurrentSeg); } 
         } else {
@@ -4078,7 +4150,7 @@ function loop() {
     
     const xGlobal = (elapsed / playbackDuration) * 750; 
     const targetTrack = tracks[currentTargetTrack];
-    const targetLocalX = targetTrack ? getTrackHeadX(targetTrack, elapsed) : xGlobal;
+    const targetLocalX = targetTrack ? getTrackHeadX(targetTrack, transportElapsed) : xGlobal;
     if (isTracing && !isEffectMode && traceCurrentSeg) { 
         if (lastTraceTrackX !== null && targetLocalX < lastTraceTrackX) {
             saveState();
@@ -4139,7 +4211,7 @@ function loop() {
         if (drawModeScan) {
             const trackDuration = getTrackDuration(t);
             const localElapsed = (isFinite(trackDuration) && trackDuration > 0)
-                ? (((elapsed % trackDuration) + trackDuration) % trackDuration)
+                ? (((transportElapsed % trackDuration) + trackDuration) % trackDuration)
                 : 0;
             redrawTrack(
                 t,
@@ -4151,9 +4223,9 @@ function loop() {
         } else {
             const trackDuration = getTrackDuration(t);
             const localElapsed = (isFinite(trackDuration) && trackDuration > 0)
-                ? (((elapsed % trackDuration) + trackDuration) % trackDuration)
+                ? (((transportElapsed % trackDuration) + trackDuration) % trackDuration)
                 : 0;
-            redrawTrack(t, { mode: "x", hx: getTrackHeadX(t, elapsed), localElapsed, trackDuration, forceBase }, brushSelect.value, chordIntervals, chordColors);
+            redrawTrack(t, { mode: "x", hx: getTrackHeadX(t, transportElapsed), localElapsed, trackDuration, forceBase }, brushSelect.value, chordIntervals, chordColors);
         }
     }); 
     const dataArray = new Uint8Array(analyser.frequencyBinCount); analyser.getByteFrequencyData(dataArray);
@@ -4172,7 +4244,7 @@ function loop() {
                     if (!xs.length) return;
                     const startX = Math.min(...xs);
                     const endX = Math.max(...xs);
-                    const localX = getTrackHeadX(track, elapsed);
+                    const localX = getTrackHeadX(track, transportElapsed);
                     if (localX >= startX && localX <= endX + 10) isFractalPlaying = true;
                 }
             });
