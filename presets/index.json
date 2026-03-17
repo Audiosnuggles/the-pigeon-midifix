@@ -1,0 +1,14 @@
+{
+  "sources": [
+    {
+      "id": "factory_set_a",
+      "name": "Factory Set A",
+      "url": "presets/Factory_Set_A.json"
+    },
+    {
+      "id": "louis",
+      "name": "Louis",
+      "url": "presets/Louis.json"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "name": "the-pigeon-ui",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "node server.js",
+    "presets:index": "node scripts/generate-presets-index.mjs"
+  }
+}

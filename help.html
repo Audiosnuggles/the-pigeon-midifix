@@ -1,0 +1,403 @@
+<div class="help-content">
+  <header class="help-header">
+    <nav id="langLinks" class="help-lang-nav">
+      <span class="lang-link active" data-lang="de">DE</span>
+      <span class="lang-link" data-lang="en">EN</span>
+      <span class="lang-link" data-lang="fr">FR</span>
+    </nav>
+    <button id="closeHelpBtn" class="btn--close-help">X</button>
+  </header>
+
+  <article id="help-de" class="help-lang-section">
+    <h2 class="help-title">The Pigeon: Grafische Synthese</h2>
+    
+    <section class="help-intro">
+      <h3>Über The Pigeon</h3>
+      <p><strong>The Pigeon</strong> ist ein webbasiertes System für grafische Vektorsynthese, das zweidimensionale Vektordaten in Echtzeit in Steuersignale für komplexe Audio-Engines übersetzt. Das Interface fungiert als akustisches Koordinatensystem: Die X-Achse definiert den Zeitverlauf ($t$), die Y-Achse die fundamentale Frequenz ($f_0$). Die visuelle Darstellung dient dabei als abstrakte grafische Partitur (Steuerdaten) und nicht als Abbildung der tatsächlichen physikalischen Schallwelle.</p>
+      <p>Inspiriert von elektroakustischen Pionierarbeiten (wie Daphne Orams „Oramics“) und konzipiert als performatives Instrument, bildet <em>The Pigeon</em> einen methodischen Kontrast zur funktionalen Dichte herkömmlicher DAWs. Das System reduziert den kompositorischen Prozess auf eine unmittelbare, visuelle Eingabe. Der bewusste Verzicht auf etablierte Raster begünstigt alternative, non-lineare und experimentelle Ansätze der Klangformung.</p>
+    </section>
+
+    <div class="help-grid">
+      <section class="help-block">
+        <h3>1. Initialisierung & Zeichnung</h3>
+        <dl class="help-dl">
+          <dt>Slot-Zuweisung</dt> <dd>Wähle in der Memory Bank (unten rechts) eine leere Zelle, um eine neue Sequenz zu initiieren.</dd>
+          <dt>Grafische Eingabe</dt> <dd>Die X-Achse repräsentiert die Zeit (t), die Y-Achse die fundamentale Frequenz (f0). Zeichne Vektoren in das Canvas.</dd>
+          <dt>Werkzeuge</dt>         <dd>Werkzeugleiste im Zeichenstil: Pen (zeichnen), Select (Segmentauswahl/Transformation) und Eraser (Vektor-Tilgung). Das Help-Icon öffnet diese Dokumentation. Direkt neben „Tools“ sitzt der <strong>X/D</strong>-Switch für den Playback-Pfad: <strong>X</strong> spielt links→rechts nach X-Position, <strong>D</strong> spielt in der tatsächlichen Zeichenreihenfolge deiner Bewegung.</dd>
+        </dl>
+      </section>
+
+      <section class="help-block">
+        <h3>2. Spur-Architektur (Tracks)</h3>
+        <dl class="help-dl">
+          <dt>Wellenformen</dt> <dd>Definiert das harmonische Spektrum: ∿ (Sinus/Grundton), ⊓ (Rechteck/ungerade Obertöne), ∧ (Sägezahn/alle Obertöne), Noise-Icon (breitbandiges Rauschen). Beim erneuten Klick auf das aktive Noise-Icon wird die Bandbreite (Q) zyklisch verändert.</dd>
+          <dt>GRID</dt>         <dd>Button rechts im Timing-Bereich der Spur. Definiert das Raster pro Spur (8 / 16 / 32 / 64 Schritte).</dd>
+          <dt>LOOP</dt>         <dd>Button rechts im Timing-Bereich der Spur. Definiert die lokale Loop-Länge pro Spur (8 / 16 / 32 / 64 Schritte).</dd>
+          <dt>Snap</dt>         <dd>Rastet Timing an das jeweilige Spur-Raster (G) ein. Gilt in beiden Playback-Pfaden: <strong>X</strong> und <strong>D</strong>. Mit Snap ON wird die Zeit quantisiert; ohne Snap läuft die Zeichnung frei.</dd>
+          <dt>Routing</dt>      <dd>Nutze Solo/Mute für isolierte Audiosignal-Kontrolle und die Slider für die Amplituden-Skalierung.</dd>
+        </dl>
+      </section>
+
+      <section class="help-block">
+        <h3>3. Performative Interaktion</h3>
+        <dl class="help-dl">
+          <dt>Poke Me Pad</dt>   <dd>Ein taktiles Echtzeit-Interface. Triggert sofortige Frequenz-Zuweisungen auf der selektierten Spur.</dd>
+          <dt>Effekt-Matrix</dt> <dd>Klicke auf die Farbindikatoren, um das Signal in dedizierte DSP-Module zu routen.</dd>
+          <dt>X/Y Link</dt>      <dd>Wandelt das Pad in einen Makro-Controller um, der algorithmisch Parameter der Effekt-Engine interpoliert (für Delay, Reverb, Vibrato, Filter, Stutter).</dd>
+          <dt>Tape Stop (TRG)</dt> <dd>Momentary-Halten: Beim Drücken startet der Vinyl-Runout (Pitch fällt mit Trägheitskurve), nach Erreichen von 0 bleibt der Track stumm, solange du hältst. Beim Loslassen startet der kontrollierte Wiederanlauf. <strong>STOP</strong> steuert die Auslaufzeit, <strong>START</strong> die Anlaufzeit.</dd>
+          <dt>Modify-Panel</dt>  <dd>Kontextabhängige Brush-Modulation: Chord zeigt Chord-Auswahl, Calligraphy zeigt ANGLE/CONTR, Fractal zeigt CHAOS/MORPH. Für Brushes ohne Parameter wird „No modifiers“ angezeigt.</dd>
+        </dl>
+      </section>
+
+      <section class="help-block">
+        <h3>4. Taktung & Makro-Struktur</h3>
+        <dl class="help-dl">
+          <dt>Transport</dt> <dd>Start/Stopp der globalen Playback-Schleife (Shortcut: Leertaste).</dd>
+          <dt>Harmonize</dt> <dd>Zwingt alle Y-Koordinaten durch mathematische Rundung auf vordefinierte musikalische Skalen.</dd>
+          <dt>EXT SYNC</dt>  <dd>Synchronisiert den Sequenzer mit deiner DAW (via virtuellem MIDI-Port).</dd>
+        </dl>
+      </section>
+      
+      <section class="help-block help-block-full">
+        <h3>5. Geometrische Synthese-Werkzeuge (Brushes)</h3>
+        <div class="help-brushes-grid">
+          <dl class="help-dl">
+            <dt>Standard</dt>    <dd>Kontinuierlicher Phasen-Oszillator (perfektes Portamento). Ideal für klare, lineare Pitch-Fahrten ohne zusätzliche Modulation. Der gezeichnete Verlauf wird direkt als kontinuierliche Tonhöhenkurve interpretiert (klassischer „Draw what you hear“-Modus).</dd>
+            <dt>Pressure</dt>    <dd>Geschwindigkeitsabhängige Linienführung. Simuliert haptischen Druck und erzeugt dynamischere Anschläge mit variabler Artikulation. Schnelle Bewegungen verdichten die visuelle Geste und führen zu impulsiverem Klangcharakter als langsame Züge.</dd>
+            <dt>Calligraphy</dt> <dd>Winkel-determinierte Geometrie mit zeitlicher Schrägstellung der Teilbereiche eines Strichs. Das erzeugt ein „Smearing“ zwischen Frequenzbereichen (weicher vs. perkussiver Eindruck je nach Winkel).<br><strong>Modify:</strong> <strong>ANGLE</strong> bestimmt Richtung/Schräge der zeitlichen Staffelung, <strong>CONTR</strong> verstärkt oder reduziert den Kontrast zwischen weichen und harten Anteilen.</dd>
+            <dt>Particles</dt>   <dd>Stochastische Mikromontage (Granularsynthese). Zerlegt die Kurve in asynchrone, granulare Grains für körnige Texturen und Cluster. Gut für Noise-Clouds, pointillistische Rhythmen und dichte, „sprühende“ Klangflächen.</dd>
+            <dt>Chord</dt>       <dd>Harmonische Frequenz-Vervielfachung. Generiert parallele Oszillatoren entlang derselben Zeichengeometrie, sodass eine einzige Geste mehrstimmig wird.<br><strong>Modify:</strong> Chord-Dropdown (Major / Minor / Sus4 / Diminished) bestimmt das Intervall-Set.</dd>
+          </dl>
+          <dl class="help-dl">
+            <dt>Xenakids</dt>    <dd>Unkorrelierte Phasenmodulation. Erzeugt schwebende Dissonanz-Cluster mit bewusst instabiler Intonation. Eine Linie wird intern in mehrere leicht gegeneinander verstimmte Bewegungen aufgefächert.</dd>
+            <dt>Rorbach</dt>     <dd>Achsensymmetrischer Kontrapunkt. Zeichnung wird gespiegelt/gegengeführt und erzeugt dadurch antiphonische Bewegungen. Besonders wirksam bei asymmetrischen Gesten, weil Original und Spiegel sich gegenseitig rhythmisch/tonal beantworten.</dd>
+            <dt>Overtone</dt>    <dd>Additive Spektralsynthese. Erweitert den Grundton um logarithmisch angeordnete Partialtöne für spektrale Verdichtung. Die gleiche Kontur wird auf mehrere Obertonlagen projiziert.</dd>
+            <dt>DX7 (FM)</dt>    <dd>Frequenzmodulation nach John Chowning. Betonung metallischer, inharmonischer Spektren bei gleichem Kurvenmaterial. Die Zeichnung steuert das FM-Material und erzeugt je nach Bewegung glockige bis aggressive Spektren.</dd>
+            <dt>Fractal</dt>     <dd>Destabilisierter Synthesizer.<br>
+              <span style="opacity: 0.7; font-size: 0.9em; display: inline-block; margin-top: 4px;">
+                <em>DSP-Steuerung via MODIFY-Panel:</em><br>
+                → <strong>CHAOS:</strong> Injiziert Rausch-Jitter in die Y-Matrix.<br>
+                → <strong>MORPH:</strong> Aktiviert eine nicht-lineare Transferfunktion (WaveShaper/Wavefolding).
+              </span>
+              <br><span style="opacity: 0.7; font-size: 0.9em; display: inline-block; margin-top: 4px;">Klanglich: von leicht lebendiger Instabilität bis zu deutlich gebrochener, schmutziger Textur.</span>
+            </dd>
+          </dl>
+        </div>
+      </section>
+
+      <section class="help-block help-block-full">
+        <h3>5b. Playback-Pfade (X/D) & Scanner</h3>
+        <dl class="help-dl" style="grid-template-columns: 170px 1fr;">
+          <dt>X-Path (X)</dt> <dd>Playback erfolgt streng nach X-Position (links→rechts). Gut für sequencer-artige, klar quantisierbare Verläufe.</dd>
+          <dt>Draw-Path (D)</dt> <dd>Playback folgt der echten Zeichenreihenfolge (Stroke-Order). Rückwärtszüge, Schleifen und Kreise werden in genau dieser Reihenfolge abgespielt.</dd>
+          <dt>Snap + X/D</dt> <dd>Bei aktivem Snap wird das Timing in beiden Modi auf das pro Spur gesetzte GRID gerundet. Dadurch klingt es rhythmisch „tighter“, kann visuell aber stufiger wirken.</dd>
+          <dt>Scanner (rote Linie)</dt> <dd>Die rote Linie zeigt die aktuelle lokale Abspielposition der Spur. Zusätzlich markieren rote/weiße Pings die aktuell gescannten Kontaktpunkte auf den gezeichneten Segmenten.</dd>
+          <dt>Scanner in Draw</dt> <dd>Im Draw-Modus folgt die Ping-Position der Zeichenreihenfolge, nicht nur dem X-Schnitt. Dadurch ist die Visualisierung näher an der tatsächlichen Trigger-Reihenfolge der Audio-Events.</dd>
+        </dl>
+      </section>
+
+      <section class="help-block help-block-full">
+        <h3>6. Datensicherung & Rendering</h3>
+        <dl class="help-dl" style="grid-template-columns: 150px 1fr;">
+          <dt>Preset Bank</dt>      <dd>Die Bank-Auswahl lädt komplette Preset-Bänke; LOAD/EXPORT BANK verwaltet komplette Bank-Sets.</dd>
+          <dt>Slot</dt>             <dd>Slot-Auswahl für einzelne Speicherzustände; LOAD SLOT öffnet einen Dateidialog (Desktop-Import), EXPORT SLOT exportiert den gewählten Slot.</dd>
+          <dt>SAVE SLOT</dt>        <dd>Speichert den aktuellen Zustand aller Vektor-Matrizen auf den gewählten Slot.</dd>
+          <dt>Live Arrangement</dt> <dd>Sequenzielles Umschalten zwischen Memory-Slots in Echtzeit.</dd>
+          <dt>Export WAV</dt>       <dd>Export im Preset-Bank-Bereich. Berechnet die Audio-Buffer iterativ (Offline-Rendering).</dd>
+          <dt>Live REC</dt>         <dd>Rekordiert den Master-Bus und exportiert improvisierte Performances.</dd>
+          <dt>Export Bank</dt>      <dd>Exportiert die komplette Session inklusive aller Bänke als JSON.</dd>
+        </dl>
+      </section>
+
+      <section class="help-block help-block-full">
+        <h3>7. Effektmodule (DSP) & Routing</h3>
+        <dl class="help-dl" style="grid-template-columns: 170px 1fr;">
+          <dt>Delay</dt>      <dd><strong>TIME</strong> setzt die Verzögerungszeit, <strong>FDBK</strong> die Rückkopplung (Anzahl/Intensität der Wiederholungen).</dd>
+          <dt>Reverb</dt>     <dd><strong>DECAY</strong> definiert die Hallfahne, <strong>MIX</strong> das Wet/Dry-Verhältnis.</dd>
+          <dt>Vibrato</dt>    <dd><strong>RATE</strong> steuert die Modulationsgeschwindigkeit, <strong>DEPTH</strong> die Tonhöhenabweichung.</dd>
+          <dt>Filter</dt>     <dd><strong>FREQ</strong> setzt die Grenzfrequenz des Lowpass, <strong>RES</strong> verstärkt die Resonanz am Cutoff.</dd>
+          <dt>Stutter</dt>    <dd><strong>RATE</strong> bestimmt die Gate-Frequenz, <strong>MIX</strong> mischt den Stotter-Anteil in den Track.</dd>
+          <dt>Tape Stop</dt>  <dd><strong>TRG</strong> ist momentary (halten): Beim Drücken stoppt der Track mit Vinyl-Trägheitskurve, beim Loslassen läuft er kontrolliert wieder an. <strong>STOP</strong> steuert die Stop-Zeit, <strong>START</strong> die Start-Zeit.</dd>
+          <dt>FX-Matrix</dt>  <dd>Farbdots routen einzelne Tracks in die jeweilige Effektkachel. Ein Effekt arbeitet nur auf gerouteten Spuren.</dd>
+          <dt>X/Y Link</dt>   <dd>Aktiviert Makrosteuerung über das Poke-Pad für Delay/Reverb/Vibrato/Filter/Stutter. Tape Stop nutzt stattdessen den eigenen TRG-Workflow.</dd>
+          <dt>BP (Track)</dt> <dd>Bypass auf Spur-Ebene für Effekt-Sends (Dry-Signal bleibt erhalten, FX-Routing der Spur wird umgangen).</dd>
+        </dl>
+      </section>
+
+      <section class="help-block help-block-full help-shortcuts">
+        <h3>Shortcuts & Workflow</h3>
+        <div class="help-shortcuts-grid">
+          <div class="shortcut-row"><kbd>[LEERTASTE]</kbd> <span>Play / Stop</span></div>
+          <div class="shortcut-row"><kbd>[CMD/CTRL + Z]</kbd> <span>Undo</span></div>
+          <div class="shortcut-row"><kbd>[CMD/CTRL + SHIFT + Z / CMD/CTRL + Y]</kbd> <span>Redo</span></div>
+          <div class="shortcut-row"><kbd>[CMD/CTRL + C/V]</kbd> <span>Copy / Paste</span></div>
+          <div class="shortcut-row"><kbd>[ALT + Drag]</kbd> <span>Selektion klonen</span></div>
+          <div class="shortcut-row"><kbd>[BACKSPACE]</kbd> <span>Auswahl löschen</span></div>
+          <div class="shortcut-row"><kbd>[SHIFT + Klick]</kbd> <span>Multi-Select</span></div>
+        </div>
+      </section>
+    </div>
+  </article>
+
+  <article id="help-en" class="help-lang-section" style="display: none;">
+    <h2 class="help-title">The Pigeon: Graphic Synthesis</h2>
+    
+    <section class="help-intro">
+      <h3>About The Pigeon</h3>
+      <p><strong>The Pigeon</strong> is a web-based system for graphical vector synthesis that translates two-dimensional vector data into control signals for complex audio engines in real time. The interface functions as an acoustic coordinate system: the X-axis defines the timeline ($t$), and the Y-axis defines the fundamental frequency ($f_0$). The visual representation serves as an abstract graphical score (control data) rather than a depiction of the actual physical sound wave.</p>
+      <p>Inspired by early electroacoustic works (such as Daphne Oram's "Oramics") and designed as a performative instrument, <em>The Pigeon</em> serves as a methodical contrast to the functional density of conventional DAWs. The system reduces the compositional process to immediate visual input. By intentionally bypassing established grids, the focus shifts to the direct acoustic impact of graphic gestures, fostering alternative, non-linear approaches to sound design.</p>
+    </section>
+
+    <div class="help-grid">
+      <section class="help-block">
+        <h3>1. Initialization & Drawing</h3>
+        <dl class="help-dl">
+          <dt>Assign Slot</dt> <dd>Select an empty cell in the Memory Bank (bottom right) to initiate a sequence.</dd>
+          <dt>Vector Input</dt>   <dd>The X-axis represents time (t), the Y-axis fundamental frequency (f0). Draw vectors into the canvas.</dd>
+          <dt>Tools</dt>          <dd>Drawing-style tool row: Pen (draw), Select (segment selection/transforms), and Eraser (vector removal). The Help icon opens this documentation. Next to “Tools” you find the <strong>X/D</strong> playback-path switch: <strong>X</strong> plays strictly left-to-right by X-position, <strong>D</strong> follows your actual stroke order.</dd>
+        </dl>
+      </section>
+
+      <section class="help-block">
+        <h3>2. Track Architecture</h3>
+        <dl class="help-dl">
+          <dt>Waveforms</dt> <dd>Defines the harmonic spectrum: ∿ (Sine), ⊓ (Square), ∧ (Sawtooth), Noise icon (wide-band noise source). Clicking the already active Noise icon cycles its bandwidth (Q).</dd>
+          <dt>GRID</dt>      <dd>Right-side timing control per track. Sets per-track grid density (8 / 16 / 32 / 64 steps).</dd>
+          <dt>LOOP</dt>      <dd>Right-side timing control per track. Sets per-track loop length (8 / 16 / 32 / 64 steps).</dd>
+          <dt>Snap</dt>      <dd>Quantizes timing to the current per-track grid (G). Works in both playback paths: <strong>X</strong> and <strong>D</strong>. With Snap ON, time is quantized; with Snap OFF, gestures run freely.</dd>
+          <dt>Routing</dt>   <dd>Use Solo/Mute for isolated audio control and volume sliders for amplitude scaling.</dd>
+        </dl>
+      </section>
+
+      <section class="help-block">
+        <h3>3. Performative Interaction</h3>
+        <dl class="help-dl">
+          <dt>Poke Me Pad</dt> <dd>A tactile real-time interface. Triggers instant frequency assignments on the selected track.</dd>
+          <dt>FX Matrix</dt>   <dd>Route audio signals into dedicated DSP modules using the color indicators.</dd>
+          <dt>X/Y Link</dt>    <dd>Hijacks the tactile pad to algorithmically interpolate FX parameters (Delay, Reverb, Vibrato, Filter, Stutter).</dd>
+          <dt>Tape Stop (TRG)</dt> <dd>Momentary hold behavior: pressing starts vinyl-like runout (pitch drops with inertia curve); once it reaches zero, the routed track remains silent while held. Releasing triggers controlled spin-up. <strong>STOP</strong> controls stop time, <strong>START</strong> controls start time.</dd>
+          <dt>Modify Panel</dt> <dd>Context-dependent brush modulation: Chord shows chord selection, Calligraphy exposes ANGLE/CONTR, Fractal exposes CHAOS/MORPH. Brushes without parameters show “No modifiers”.</dd>
+        </dl>
+      </section>
+
+      <section class="help-block">
+        <h3>4. Clock & Macro Structure</h3>
+        <dl class="help-dl">
+          <dt>Transport</dt> <dd>Start/Stop the global playback loop (Shortcut: Spacebar).</dd>
+          <dt>Harmonize</dt> <dd>Constrains all Y-coordinates to predefined musical scales via mathematical rounding.</dd>
+          <dt>EXT SYNC</dt>  <dd>Slaves the sequencer to your DAW (via virtual MIDI port).</dd>
+        </dl>
+      </section>
+      
+      <section class="help-block help-block-full">
+        <h3>5. Geometric Synthesis Brushes</h3>
+        <div class="help-brushes-grid">
+          <dl class="help-dl">
+            <dt>Standard</dt>    <dd>Continuous phase oscillator (perfect portamento). Best for clean linear pitch movement without extra modulation. Your drawn contour is interpreted directly as a continuous pitch curve (classic “draw what you hear”).</dd>
+            <dt>Pressure</dt>    <dd>Velocity-dependent drawing behavior. Simulates physical pressure and yields more dynamic articulation. Faster motion densifies gesture energy and usually feels more percussive than slow drags.</dd>
+            <dt>Calligraphy</dt> <dd>Angle-driven geometry with temporal skew inside each stroke. This creates frequency smearing (softer vs. more percussive impression depending on angle).<br><strong>Modify:</strong> <strong>ANGLE</strong> sets direction/skew of timing distribution, <strong>CONTR</strong> increases or softens contrast between smooth and sharp components.</dd>
+            <dt>Particles</dt>   <dd>Stochastic micro-montage (Granular Synthesis). Splits curves into asynchronous grains for noisy, cloud-like textures. Useful for noise clouds, pointillistic rhythms, and dense spray-like layers.</dd>
+            <dt>Chord</dt>       <dd>Harmonic frequency multiplication. Generates parallel oscillators along the same gesture so one line becomes polyphonic.<br><strong>Modify:</strong> chord dropdown (Major / Minor / Sus4 / Diminished) selects the interval set.</dd>
+          </dl>
+          <dl class="help-dl">
+            <dt>Xenakids</dt>    <dd>Uncorrelated phase modulation. Produces hovering dissonance clusters with intentional instability. One drawn line is internally spread into multiple slightly detuned motions.</dd>
+            <dt>Rorbach</dt>     <dd>Axis-symmetric counterpoint. Gesture material is mirrored/anti-directed for contrapuntal motion. Especially effective with asymmetric gestures, where original and mirror answer each other rhythmically/tonally.</dd>
+            <dt>Overtone</dt>    <dd>Additive Spectral Synthesis. Extends fundamentals with logarithmically arranged partials for spectral density. The same contour is projected onto multiple overtone layers.</dd>
+            <dt>DX7 (FM)</dt>    <dd>Frequency Modulation (John Chowning method), emphasizing metallic and inharmonic spectra. The gesture drives FM behavior, from bell-like to aggressive tones depending on movement.</dd>
+            <dt>Fractal</dt>     <dd>Destabilized synthesizer.<br>
+              <span style="opacity: 0.7; font-size: 0.9em; display: inline-block; margin-top: 4px;">
+                <em>DSP-Control via MODIFY panel:</em><br>
+                → <strong>CHAOS:</strong> Injects noise-jitter into the Y-matrix.<br>
+                → <strong>MORPH:</strong> Activates a non-linear transfer function (WaveShaper/Wavefolding).
+              </span>
+              <br><span style="opacity: 0.7; font-size: 0.9em; display: inline-block; margin-top: 4px;">Sonically: from subtle living instability to heavily broken, dirty texture.</span>
+            </dd>
+          </dl>
+        </div>
+      </section>
+
+      <section class="help-block help-block-full">
+        <h3>5b. Playback Paths (X/D) & Scanner</h3>
+        <dl class="help-dl" style="grid-template-columns: 170px 1fr;">
+          <dt>X Path (X)</dt> <dd>Playback follows X-position strictly (left→right). Good for sequencer-like, clearly quantizable behavior.</dd>
+          <dt>Draw Path (D)</dt> <dd>Playback follows true stroke order. Backward strokes, loops, and circles are played in exactly that drawn order.</dd>
+          <dt>Snap + X/D</dt> <dd>With Snap enabled, timing is rounded to each track’s GRID in both modes. This feels tighter rhythmically but can look visually more stepped.</dd>
+          <dt>Scanner (red line)</dt> <dd>The red line shows the current local playback position of the track. Additional red/white pings mark currently scanned contact points on drawn segments.</dd>
+          <dt>Scanner in Draw</dt> <dd>In Draw mode, ping positions follow stroke order rather than only X-intersections. This keeps visual feedback closer to actual audio trigger order.</dd>
+        </dl>
+      </section>
+
+      <section class="help-block help-block-full">
+        <h3>6. Saving & Rendering</h3>
+        <dl class="help-dl" style="grid-template-columns: 150px 1fr;">
+          <dt>Preset Bank</dt>      <dd>The bank select loads complete preset banks; LOAD/EXPORT BANK manages full bank sets.</dd>
+          <dt>Slot</dt>             <dd>Slot select for single memory states; LOAD SLOT opens a file dialog (desktop import), EXPORT SLOT exports the selected slot.</dd>
+          <dt>SAVE SLOT</dt>        <dd>Stores the current state of all vector matrices into the selected slot.</dd>
+          <dt>Live Arrange</dt>     <dd>Sequential switching between memory slots in real-time.</dd>
+          <dt>Export WAV</dt>       <dd>Export inside the Preset Bank area. Iterative offline-rendering of audio buffers.</dd>
+          <dt>Live REC</dt>         <dd>Records the master bus and exports improvised performances.</dd>
+          <dt>Export Bank</dt>      <dd>Exports the complete session including all banks as JSON.</dd>
+        </dl>
+      </section>
+
+      <section class="help-block help-block-full">
+        <h3>7. FX Modules (DSP) & Routing</h3>
+        <dl class="help-dl" style="grid-template-columns: 170px 1fr;">
+          <dt>Delay</dt>      <dd><strong>TIME</strong> sets delay time, <strong>FDBK</strong> sets feedback amount (repetition density/intensity).</dd>
+          <dt>Reverb</dt>     <dd><strong>DECAY</strong> controls tail length, <strong>MIX</strong> controls wet/dry balance.</dd>
+          <dt>Vibrato</dt>    <dd><strong>RATE</strong> controls modulation speed, <strong>DEPTH</strong> controls pitch deviation amount.</dd>
+          <dt>Filter</dt>     <dd><strong>FREQ</strong> sets low-pass cutoff, <strong>RES</strong> boosts resonance around the cutoff point.</dd>
+          <dt>Stutter</dt>    <dd><strong>RATE</strong> sets gate frequency, <strong>MIX</strong> blends stuttered signal into the track.</dd>
+          <dt>Tape Stop</dt>  <dd><strong>TRG</strong> is momentary (hold): pressing triggers vinyl-like runout; releasing triggers controlled spin-up. <strong>STOP</strong> sets stop time, <strong>START</strong> sets start time.</dd>
+          <dt>FX Matrix</dt>  <dd>Color dots route individual tracks into each FX unit. FX processing only affects routed tracks.</dd>
+          <dt>X/Y Link</dt>   <dd>Enables pad macro control for Delay/Reverb/Vibrato/Filter/Stutter. Tape Stop uses its dedicated TRG workflow instead.</dd>
+          <dt>BP (Track)</dt> <dd>Per-track bypass for effect sends (dry path stays active while FX sends for that track are bypassed).</dd>
+        </dl>
+      </section>
+
+      <section class="help-block help-block-full help-shortcuts">
+        <h3>Shortcuts & Workflow</h3>
+        <div class="help-shortcuts-grid">
+          <div class="shortcut-row"><kbd>[SPACEBAR]</kbd> <span>Play / Stop</span></div>
+          <div class="shortcut-row"><kbd>[CMD/CTRL + Z]</kbd> <span>Undo</span></div>
+          <div class="shortcut-row"><kbd>[CMD/CTRL + SHIFT + Z / CMD/CTRL + Y]</kbd> <span>Redo</span></div>
+          <div class="shortcut-row"><kbd>[CMD/CTRL + C/V]</kbd> <span>Copy / Paste</span></div>
+          <div class="shortcut-row"><kbd>[ALT + Drag]</kbd> <span>Clone selection</span></div>
+          <div class="shortcut-row"><kbd>[BACKSPACE]</kbd> <span>Delete selection</span></div>
+          <div class="shortcut-row"><kbd>[SHIFT + Click]</kbd> <span>Multi-Select</span></div>
+        </div>
+      </section>
+    </div>
+  </article>
+
+  <article id="help-fr" class="help-lang-section" style="display: none;">
+    <h2 class="help-title">The Pigeon: Synthèse Graphique</h2>
+    
+    <section class="help-intro">
+      <h3>À propos de The Pigeon</h3>
+      <p><strong>The Pigeon</strong> est un système web de synthèse vectorielle graphique qui traduit des données vectorielles bidimensionnelles en signaux de contrôle pour des moteurs audio complexes en temps réel. L'interface fonctionne comme un système de coordonnées acoustiques : l'axe X définit le déroulement temporel ($t$), l'axe Y la fréquence fondamentale ($f_0$). La représentation visuelle sert de partition graphique abstraite (données de contrôle) et non de représentation de l'onde sonore physique réelle.</p>
+      <p>Inspiré par les travaux pionniers de l'électroacoustique (comme l'« Oramics » de Daphne Oram) et conçu comme un instrument performatif, <em>The Pigeon</em> constitue un contraste méthodique à la densité fonctionnelle des DAW conventionnels. Le système réduit le processus compositionnel à une saisie visuelle immédiate. L'absence délibérée de grilles favorise des approches alternatives, non linéaires et expérimentales de la mise en forme sonore.</p>
+    </section>
+
+    <div class="help-grid">
+      <section class="help-block">
+        <h3>1. Initialisation & Dessin</h3>
+        <dl class="help-dl">
+          <dt>Assignation Slot</dt> <dd>Sélectionnez une cellule vide dans la banque mémoire (en bas à droite) pour initier une séquence.</dd>
+          <dt>Saisie</dt>      <dd>L'axe X représente le temps (t), l'axe Y la fréquence (f0). Dessinez des vecteurs sur le canvas.</dd>
+          <dt>Outils</dt>      <dd>Barre d'outils type dessin: Pen (dessin), Select (sélection/transformation de segments) et Eraser (effacement vectoriel). L'icône Help ouvre cette documentation. À côté de « Tools », le switch <strong>X/D</strong> définit le chemin de lecture: <strong>X</strong> lit strictement de gauche à droite selon la position X, <strong>D</strong> suit l'ordre réel du geste dessiné.</dd>
+        </dl>
+      </section>
+
+      <section class="help-block">
+        <h3>2. Architecture des Pistes</h3>
+        <dl class="help-dl">
+          <dt>Formes d'Onde</dt> <dd>Définit le spectre harmonique : ∿ (Sinus), ⊓ (Carrée), ∧ (Dents de scie), icône Noise (source de bruit large bande). Un clic répété sur l’icône Noise active fait défiler la largeur de bande (Q).</dd>
+          <dt>GRID</dt>          <dd>Contrôle de timing à droite de la piste. Définit la densité de grille par piste (8 / 16 / 32 / 64 pas).</dd>
+          <dt>LOOP</dt>          <dd>Contrôle de timing à droite de la piste. Définit la longueur de boucle par piste (8 / 16 / 32 / 64 pas).</dd>
+          <dt>Snap</dt>          <dd>Quantifie le timing sur la grille active de la piste (G). Fonctionne dans les deux chemins de lecture: <strong>X</strong> et <strong>D</strong>. Snap ON = temps quantifié, Snap OFF = geste libre.</dd>
+          <dt>Routage</dt>       <dd>Utilisez Solo/Mute pour le contrôle isolé et les curseurs pour la mise à l'échelle de l'amplitude.</dd>
+        </dl>
+      </section>
+
+      <section class="help-block">
+        <h3>3. Interaction Performative</h3>
+        <dl class="help-dl">
+          <dt>Poke Me Pad</dt>    <dd>Interface tactile en temps réel. Déclenche des assignations de fréquences immédiates.</dd>
+          <dt>Matrice d'Effets</dt> <dd>Cliquez sur les indicateurs de couleur pour router le signal vers les modules DSP dédiés.</dd>
+          <dt>Lien X/Y</dt>       <dd>Convertit le pad en macro-contrôleur qui interpole algorithmiquement les paramètres d'effet (Delay, Reverb, Vibrato, Filter, Stutter).</dd>
+          <dt>Tape Stop (TRG)</dt> <dd>Comportement momentary (maintenir): à l'appui, le runout type vinyle démarre (pitch qui chute avec inertie); arrivé à 0, la piste routée reste muette tant que le bouton est maintenu. Au relâchement, redémarrage contrôlé. <strong>STOP</strong> règle le temps d'arrêt, <strong>START</strong> règle le temps de redémarrage.</dd>
+          <dt>Panneau Modify</dt> <dd>Modulation contextuelle des brushes: Chord affiche le sélecteur d'accord, Calligraphy affiche ANGLE/CONTR, Fractal affiche CHAOS/MORPH. Les brushes sans paramètres affichent « No modifiers ».</dd>
+        </dl>
+      </section>
+
+      <section class="help-block">
+        <h3>4. Horloge & Macro-Structure</h3>
+        <dl class="help-dl">
+          <dt>Transport</dt>  <dd>Démarrage/Arrêt de la boucle globale (Raccourci: Espace).</dd>
+          <dt>Harmoniser</dt> <dd>Contraint toutes les coordonnées Y aux échelles musicales prédéfinies par arrondi mathématique.</dd>
+          <dt>EXT SYNC</dt>   <dd>Synchronise le séquenceur avec votre DAW (via un port MIDI virtuel).</dd>
+        </dl>
+      </section>
+      
+      <section class="help-block help-block-full">
+        <h3>5. Outils de Synthèse (Brushes)</h3>
+        <div class="help-brushes-grid">
+          <dl class="help-dl">
+            <dt>Standard</dt>   <dd>Oscillateur continu à phase (portamento parfait). Idéal pour des trajectoires de pitch claires et linéaires. Le tracé est interprété directement comme une courbe de hauteur continue (logique « draw what you hear »).</dd>
+            <dt>Pressure</dt>   <dd>Tracé dépendant de la vélocité simulant la pression physique et produisant une articulation plus dynamique. Les gestes rapides concentrent l'énergie et donnent souvent un rendu plus percussif que les gestes lents.</dd>
+            <dt>Calligraphy</dt><dd>Géométrie guidée par l'angle avec décalage temporel interne du trait. Cela crée un effet de smear entre zones fréquentielles (plus doux ou plus percussif selon l'angle).<br><strong>Modify :</strong> <strong>ANGLE</strong> règle la direction/pente de la distribution temporelle, <strong>CONTR</strong> accentue ou adoucit le contraste entre composantes douces et nettes.</dd>
+            <dt>Particles</dt>  <dd>Micro-montage stochastique (Synthèse Granulaire). Décompose la courbe en grains asynchrones pour des textures nuageuses et granuleuses. Utile pour clouds de bruit, rythmes pointillistes et couches denses.</dd>
+            <dt>Chord</dt>      <dd>Multiplication harmonique de la fréquence. Génère des oscillateurs parallèles sur le même geste: une seule ligne devient polyphonique.<br><strong>Modify :</strong> menu d'accords (Major / Minor / Sus4 / Diminished) pour choisir le jeu d'intervalles.</dd>
+          </dl>
+          <dl class="help-dl">
+            <dt>Xenakids</dt>   <dd>Modulation de phase non corrélée. Crée des clusters dissonants flottants avec instabilité volontaire. Une ligne est répartie en plusieurs mouvements légèrement désaccordés.</dd>
+            <dt>Rorbach</dt>    <dd>Contrepoint symétrique. Le geste est réfléchi/contre-dirigé pour créer un mouvement contrapuntique. Très efficace avec des gestes asymétriques, car original et miroir se répondent rythmiquement/tonalement.</dd>
+            <dt>Overtone</dt>   <dd>Synthèse Spectrale Additive. Étend la fondamentale avec des partiels logarithmiques pour densifier le spectre. La même courbe est projetée sur plusieurs couches d'harmoniques.</dd>
+            <dt>DX7 (FM)</dt>   <dd>Modulation de Fréquence (méthode John Chowning), orientée vers des timbres métalliques et inharmoniques. Le geste pilote la FM, de textures cloche à des sons agressifs selon le mouvement.</dd>
+            <dt>Fractal</dt>    <dd>Synthétiseur déstabilisé.<br>
+              <span style="opacity: 0.7; font-size: 0.9em; display: inline-block; margin-top: 4px;">
+                <em>Contrôle DSP via le panneau MODIFY :</em><br>
+                → <strong>CHAOS :</strong> Injecte du bruit de phase (jitter) dans la matrice Y.<br>
+                → <strong>MORPH :</strong> Active une fonction de transfert non linéaire (WaveShaper/Wavefolding).
+              </span>
+              <br><span style="opacity: 0.7; font-size: 0.9em; display: inline-block; margin-top: 4px;">Son: d'une instabilité subtile à une texture fortement brisée et sale.</span>
+            </dd>
+          </dl>
+        </div>
+      </section>
+
+      <section class="help-block help-block-full">
+        <h3>5b. Chemins de lecture (X/D) & Scanner</h3>
+        <dl class="help-dl" style="grid-template-columns: 170px 1fr;">
+          <dt>Chemin X (X)</dt> <dd>La lecture suit strictement la position X (gauche→droite). Idéal pour un comportement type séquenceur et facilement quantifiable.</dd>
+          <dt>Chemin Draw (D)</dt> <dd>La lecture suit l'ordre réel du trait. Les retours arrière, boucles et cercles sont joués exactement dans cet ordre.</dd>
+          <dt>Snap + X/D</dt> <dd>Avec Snap actif, le timing est arrondi sur la GRID de chaque piste dans les deux modes. Le résultat est plus tight rythmiquement, mais visuellement plus “en marches”.</dd>
+          <dt>Scanner (ligne rouge)</dt> <dd>La ligne rouge montre la position locale de lecture de la piste. Des pings rouge/blanc indiquent les points de contact actuellement scannés sur les segments.</dd>
+          <dt>Scanner en Draw</dt> <dd>En mode Draw, la position des pings suit l'ordre du trait et pas seulement les intersections X. Le retour visuel colle donc mieux à l'ordre réel des déclenchements audio.</dd>
+        </dl>
+      </section>
+
+      <section class="help-block help-block-full">
+        <h3>6. Sauvegarde & Rendu</h3>
+        <dl class="help-dl" style="grid-template-columns: 150px 1fr;">
+          <dt>Preset Bank</dt>      <dd>Le menu de banque charge des banques complètes; LOAD/EXPORT BANK gère des jeux complets.</dd>
+          <dt>Slot</dt>             <dd>Sélection d'un état mémoire individuel; LOAD SLOT ouvre un dialogue de fichier (import desktop), EXPORT SLOT exporte le slot sélectionné.</dd>
+          <dt>SAVE SLOT</dt>        <dd>Sauvegarde l'état actuel de toutes les matrices vectorielles dans le slot sélectionné.</dd>
+          <dt>Live Arrange</dt>     <dd>Basculement séquentiel entre les slots mémoire en temps réel.</dd>
+          <dt>Export WAV</dt>       <dd>Export dans la zone Preset Bank. Calcul itératif des buffers audio (rendu hors ligne).</dd>
+          <dt>Live REC</dt>         <dd>Enregistre le bus master et exporte des performances improvisées.</dd>
+          <dt>Export Bank</dt>      <dd>Exporte la session complète avec toutes les banques en JSON.</dd>
+        </dl>
+      </section>
+
+      <section class="help-block help-block-full">
+        <h3>7. Modules d'Effets (DSP) & Routage</h3>
+        <dl class="help-dl" style="grid-template-columns: 170px 1fr;">
+          <dt>Delay</dt>      <dd><strong>TIME</strong> règle le temps de retard, <strong>FDBK</strong> la quantité de feedback (densité/intensité des répétitions).</dd>
+          <dt>Reverb</dt>     <dd><strong>DECAY</strong> règle la longueur de la queue de réverbération, <strong>MIX</strong> le dosage wet/dry.</dd>
+          <dt>Vibrato</dt>    <dd><strong>RATE</strong> règle la vitesse de modulation, <strong>DEPTH</strong> l'ampleur de la déviation de hauteur.</dd>
+          <dt>Filter</dt>     <dd><strong>FREQ</strong> règle la fréquence de coupure du low-pass, <strong>RES</strong> accentue la résonance autour du cutoff.</dd>
+          <dt>Stutter</dt>    <dd><strong>RATE</strong> règle la fréquence de gate, <strong>MIX</strong> dose la part stutter dans la piste.</dd>
+          <dt>Tape Stop</dt>  <dd><strong>TRG</strong> est momentary (maintenir): appuyer lance le runout vinyle, relâcher lance le redémarrage contrôlé. <strong>STOP</strong> règle le temps d'arrêt, <strong>START</strong> le temps de redémarrage.</dd>
+          <dt>Matrice FX</dt> <dd>Les points de couleur routent chaque piste vers chaque module d'effet. Un effet ne traite que les pistes routées.</dd>
+          <dt>Lien X/Y</dt>   <dd>Active le macro-contrôle via le pad pour Delay/Reverb/Vibrato/Filter/Stutter. Tape Stop utilise son workflow TRG dédié.</dd>
+          <dt>BP (Piste)</dt> <dd>Bypass des envois d'effets par piste (le signal dry reste actif, les sends FX de la piste sont contournés).</dd>
+        </dl>
+      </section>
+
+      <section class="help-block help-block-full help-shortcuts">
+        <h3>Raccourcis & Workflow</h3>
+        <div class="help-shortcuts-grid">
+          <div class="shortcut-row"><kbd>[ESPACE]</kbd> <span>Lecture / Pause</span></div>
+          <div class="shortcut-row"><kbd>[CMD/CTRL + Z]</kbd> <span>Annuler (Undo)</span></div>
+          <div class="shortcut-row"><kbd>[CMD/CTRL + SHIFT + Z / CMD/CTRL + Y]</kbd> <span>Rétablir (Redo)</span></div>
+          <div class="shortcut-row"><kbd>[CMD/CTRL + C/V]</kbd> <span>Copier / Coller</span></div>
+          <div class="shortcut-row"><kbd>[ALT + Glisser]</kbd> <span>Cloner la sélection</span></div>
+          <div class="shortcut-row"><kbd>[BACKSPACE]</kbd> <span>Supprimer</span></div>
+          <div class="shortcut-row"><kbd>[SHIFT + Clic]</kbd> <span>Sélection multiple</span></div>
+        </div>
+      </section>
+    </div>
+  </article>
+</div>

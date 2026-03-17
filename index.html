@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Pigeon.</title>
+  
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://thehumants.com/the-pigeon-UI/index.html">
+  <meta property="og:title" content="The Pigeon - Draw your sound.">
+  <meta property="og:description" content="A Vector-Based Graphic Synthesizer & Sequencer for experimental music.">
+  <meta property="og:image" content="https://thehumants.com/the-pigeon-UI/og-image.jpg">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Pigeon - Draw your sound.">
+  <meta name="twitter:description" content="A Vector-Based Graphic Synthesizer & Sequencer for experimental music.">
+  <meta name="twitter:image" content="https://thehumants.com/the-pigeon-UI/og-image.jpg">
+
+  <link rel="stylesheet" href="style.css?v=20260310c" />
+</head>
+<body>
+<div class="app">
+
+  <header class="header">
+    <div class="header__left">
+      <h1 class="header__title" id="pigeonTitle">
+        <span class="title-line title-line--brand">The Pigeon.</span>
+        <span class="title-line title-line--sub">Graphic Synthesis System</span>
+      </h1>
+    </div>
+    
+    <div class="header__right">
+      <img id="pigeon" src="pigeon.svg" alt="Pigeon">
+    </div>
+  </header>
+
+  <section class="tracks" id="main">
+
+    <div class="track track-container">
+      <div class="track__swatch track__swatch--pink"><span class="track__swatch-label">TRACK 1</span></div>
+      <div class="track__wave-btns wave-buttons">
+        <button class="wave-btn wave-btn--active active" data-wave="sine" aria-label="Sine"><img src="sine.svg" alt="" aria-hidden="true"></button>
+        <button class="wave-btn" data-wave="square" aria-label="Square"><img src="square.svg" alt="" aria-hidden="true"></button>
+        <button class="wave-btn" data-wave="sawtooth" aria-label="Sawtooth"><img src="saw.svg" alt="" aria-hidden="true"></button>
+        <button class="wave-btn wave-btn--icon" data-wave="noise" aria-label="Noise"><img src="noise.svg" alt="" aria-hidden="true"></button>
+      </div>
+      <div class="track__freq"><span>1k</span><span>500</span><span>250</span><span>80</span></div>
+      <div class="track__canvas-wrap"><canvas class="track__canvas" width="750" height="100"></canvas></div>
+      <div class="track__side">
+        <div class="track__control-row">
+          <div class="track__control-block">
+            <button class="track__bp-extra" type="button" aria-label="FX Bypass">BP</button>
+            <span class="track__control-label">BP</span>
+          </div>
+          <div class="track__control-block">
+            <button class="btn--mute mute-btn">M</button>
+            <span class="track__control-label">MUTE</span>
+          </div>
+          <div class="track__control-block">
+            <button class="btn--solo">S</button>
+            <span class="track__control-label">SOLO</span>
+          </div>
+        </div>
+        <div class="track__control-block track__timing-block">
+          <div class="track__timing-row">
+            <div class="track__control-block">
+              <label class="track__snap-inline track__snap-inline--timing" title="Snap: off">
+                <input id="snap-t1" class="snap-checkbox" type="checkbox">
+                <span class="snap-box"></span>
+              </label>
+              <span class="track__control-label">SNAP</span>
+            </div>
+            <div class="track__control-block">
+              <button class="btn--grid" title="Grid: 32 steps">32</button>
+              <span class="track__control-label">GRID</span>
+            </div>
+            <div class="track__control-block">
+              <button class="btn--len" title="Loop: 32 steps">32</button>
+              <span class="track__control-label">LOOP</span>
+            </div>
+          </div>
+        </div>
+        <div class="track__control-block track__volume-block">
+          <div class="track__vol-wrapper">
+            <input id="vol-t1" class="slider volume-slider" type="range" min="0" max="1" step="0.01" value="0.8">
+            <div class="clipping-led" id="peak-t1"></div>
+          </div>
+          <span class="track__control-label">Vol</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="track track-container">
+      <div class="track__swatch track__swatch--cyan"><span class="track__swatch-label">TRACK 2</span></div>
+      <div class="track__wave-btns wave-buttons">
+        <button class="wave-btn wave-btn--active active" data-wave="sine" aria-label="Sine"><img src="sine.svg" alt="" aria-hidden="true"></button>
+        <button class="wave-btn" data-wave="square" aria-label="Square"><img src="square.svg" alt="" aria-hidden="true"></button>
+        <button class="wave-btn" data-wave="sawtooth" aria-label="Sawtooth"><img src="saw.svg" alt="" aria-hidden="true"></button>
+        <button class="wave-btn wave-btn--icon" data-wave="noise" aria-label="Noise"><img src="noise.svg" alt="" aria-hidden="true"></button>
+      </div>
+      <div class="track__freq"><span>1k</span><span>500</span><span>250</span><span>80</span></div>
+      <div class="track__canvas-wrap"><canvas class="track__canvas" width="750" height="100"></canvas></div>
+      <div class="track__side">
+        <div class="track__control-row">
+          <div class="track__control-block">
+            <button class="track__bp-extra" type="button" aria-label="FX Bypass">BP</button>
+            <span class="track__control-label">BP</span>
+          </div>
+          <div class="track__control-block">
+            <button class="btn--mute mute-btn">M</button>
+            <span class="track__control-label">MUTE</span>
+          </div>
+          <div class="track__control-block">
+            <button class="btn--solo">S</button>
+            <span class="track__control-label">SOLO</span>
+          </div>
+        </div>
+        <div class="track__control-block track__timing-block">
+          <div class="track__timing-row">
+            <div class="track__control-block">
+              <label class="track__snap-inline track__snap-inline--timing" title="Snap: off">
+                <input id="snap-t2" class="snap-checkbox" type="checkbox">
+                <span class="snap-box"></span>
+              </label>
+              <span class="track__control-label">SNAP</span>
+            </div>
+            <div class="track__control-block">
+              <button class="btn--grid" title="Grid: 32 steps">32</button>
+              <span class="track__control-label">GRID</span>
+            </div>
+            <div class="track__control-block">
+              <button class="btn--len" title="Loop: 32 steps">32</button>
+              <span class="track__control-label">LOOP</span>
+            </div>
+          </div>
+        </div>
+        <div class="track__control-block track__volume-block">
+          <div class="track__vol-wrapper">
+            <input id="vol-t2" class="slider volume-slider" type="range" min="0" max="1" step="0.01" value="0.8">
+            <div class="clipping-led" id="peak-t2"></div>
+          </div>
+          <span class="track__control-label">Vol</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="track track-container">
+      <div class="track__swatch track__swatch--yellow"><span class="track__swatch-label">TRACK 3</span></div>
+      <div class="track__wave-btns wave-buttons">
+        <button class="wave-btn wave-btn--active active" data-wave="sine" aria-label="Sine"><img src="sine.svg" alt="" aria-hidden="true"></button>
+        <button class="wave-btn" data-wave="square" aria-label="Square"><img src="square.svg" alt="" aria-hidden="true"></button>
+        <button class="wave-btn" data-wave="sawtooth" aria-label="Sawtooth"><img src="saw.svg" alt="" aria-hidden="true"></button>
+        <button class="wave-btn wave-btn--icon" data-wave="noise" aria-label="Noise"><img src="noise.svg" alt="" aria-hidden="true"></button>
+      </div>
+      <div class="track__freq"><span>1k</span><span>500</span><span>250</span><span>80</span></div>
+      <div class="track__canvas-wrap"><canvas class="track__canvas" width="750" height="100"></canvas></div>
+      <div class="track__side">
+        <div class="track__control-row">
+          <div class="track__control-block">
+            <button class="track__bp-extra" type="button" aria-label="FX Bypass">BP</button>
+            <span class="track__control-label">BP</span>
+          </div>
+          <div class="track__control-block">
+            <button class="btn--mute mute-btn">M</button>
+            <span class="track__control-label">MUTE</span>
+          </div>
+          <div class="track__control-block">
+            <button class="btn--solo">S</button>
+            <span class="track__control-label">SOLO</span>
+          </div>
+        </div>
+        <div class="track__control-block track__timing-block">
+          <div class="track__timing-row">
+            <div class="track__control-block">
+              <label class="track__snap-inline track__snap-inline--timing" title="Snap: off">
+                <input id="snap-t3" class="snap-checkbox" type="checkbox">
+                <span class="snap-box"></span>
+              </label>
+              <span class="track__control-label">SNAP</span>
+            </div>
+            <div class="track__control-block">
+              <button class="btn--grid" title="Grid: 32 steps">32</button>
+              <span class="track__control-label">GRID</span>
+            </div>
+            <div class="track__control-block">
+              <button class="btn--len" title="Loop: 32 steps">32</button>
+              <span class="track__control-label">LOOP</span>
+            </div>
+          </div>
+        </div>
+        <div class="track__control-block track__volume-block">
+          <div class="track__vol-wrapper">
+            <input id="vol-t3" class="slider volume-slider" type="range" min="0" max="1" step="0.01" value="0.8">
+            <div class="clipping-led" id="peak-t3"></div>
+          </div>
+          <span class="track__control-label">Vol</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="track track-container">
+      <div class="track__swatch track__swatch--green"><span class="track__swatch-label">TRACK 4</span></div>
+      <div class="track__wave-btns wave-buttons">
+        <button class="wave-btn wave-btn--active active" data-wave="sine" aria-label="Sine"><img src="sine.svg" alt="" aria-hidden="true"></button>
+        <button class="wave-btn" data-wave="square" aria-label="Square"><img src="square.svg" alt="" aria-hidden="true"></button>
+        <button class="wave-btn" data-wave="sawtooth" aria-label="Sawtooth"><img src="saw.svg" alt="" aria-hidden="true"></button>
+        <button class="wave-btn wave-btn--icon" data-wave="noise" aria-label="Noise"><img src="noise.svg" alt="" aria-hidden="true"></button>
+      </div>
+      <div class="track__freq"><span>1k</span><span>500</span><span>250</span><span>80</span></div>
+      <div class="track__canvas-wrap"><canvas class="track__canvas" width="750" height="100"></canvas></div>
+      <div class="track__side">
+        <div class="track__control-row">
+          <div class="track__control-block">
+            <button class="track__bp-extra" type="button" aria-label="FX Bypass">BP</button>
+            <span class="track__control-label">BP</span>
+          </div>
+          <div class="track__control-block">
+            <button class="btn--mute mute-btn">M</button>
+            <span class="track__control-label">MUTE</span>
+          </div>
+          <div class="track__control-block">
+            <button class="btn--solo">S</button>
+            <span class="track__control-label">SOLO</span>
+          </div>
+        </div>
+        <div class="track__control-block track__timing-block">
+          <div class="track__timing-row">
+            <div class="track__control-block">
+              <label class="track__snap-inline track__snap-inline--timing" title="Snap: off">
+                <input id="snap-t4" class="snap-checkbox" type="checkbox">
+                <span class="snap-box"></span>
+              </label>
+              <span class="track__control-label">SNAP</span>
+            </div>
+            <div class="track__control-block">
+              <button class="btn--grid" title="Grid: 32 steps">32</button>
+              <span class="track__control-label">GRID</span>
+            </div>
+            <div class="track__control-block">
+              <button class="btn--len" title="Loop: 32 steps">32</button>
+              <span class="track__control-label">LOOP</span>
+            </div>
+          </div>
+        </div>
+        <div class="track__control-block track__volume-block">
+          <div class="track__vol-wrapper">
+            <input id="vol-t4" class="slider volume-slider" type="range" min="0" max="1" step="0.01" value="0.8">
+            <div class="clipping-led" id="peak-t4"></div>
+          </div>
+          <span class="track__control-label">Vol</span>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="tools-fx-panel">
+    <div class="tools-perf-wrapper">
+      <div class="tools-col tools-col--enhanced">
+        <div class="tools-head">
+          <span class="block-label">Tools</span>
+          <div class="path-switch" id="playbackPathSwitch" role="group" aria-label="Playback path mode">
+            <button type="button" id="pathModeX" class="path-mode-btn active" data-path-mode="x" aria-pressed="true" title="Playback path: X-order (classic time-left-to-right)">X</button>
+            <button type="button" id="pathModeD" class="path-mode-btn" data-path-mode="draw" aria-pressed="false" title="Playback path: draw-order (follows your stroke direction)">D</button>
+          </div>
+        </div>
+        <div class="tools-enhanced-layout">
+          <div class="tools-enhanced-main">
+            <div class="tool-btn-group tool-btn-group--four" role="group" aria-label="Tools">
+              <button type="button" class="tool-btn active" data-tool="draw" aria-pressed="true" title="Draw">
+                <img src="Pen.svg" alt="" aria-hidden="true">
+              </button>
+              <button type="button" class="tool-btn" data-tool="select" aria-pressed="false" title="Select">
+                <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                  <path d="M4 3l6 14 2-6 6-2-14-6z"></path>
+                  <path d="M12 12l5 5"></path>
+                </svg>
+              </button>
+              <button type="button" class="tool-btn" data-tool="erase" aria-pressed="false" title="Erase">
+                <svg viewBox="0 0 27 24" aria-hidden="true" focusable="false">
+                  <path d="M11.4141 22.4142H6.41406L1.41406 17.4142L9.41406 9.41418M11.4141 22.4142L16.9141 16.9142M11.4141 22.4142H21.9141M9.41406 9.41418L17.4141 1.41418L24.9141 8.91418L16.9141 16.9142M9.41406 9.41418L16.9141 16.9142" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                  <rect x="17.1924" y="1.41418" width="11" height="11" transform="rotate(45 17.1924 1.41418)" fill="currentColor"/>
+                </svg>
+              </button>
+              <button type="button" class="tool-btn tool-btn--help-quick" id="toolHelpQuickBtn" title="Help">?</button>
+            </div>
+            <input id="toolSelect" class="tool-select-hidden" type="hidden" value="draw">
+
+            <select id="brushSelect" class="select-btn" style="width: 100%;">
+              <option value="standard">BRUSH: Standard</option>
+              <option value="variable">Pressure</option>
+              <option value="calligraphy">Calligraphy</option>
+              <option value="particles">Particles</option>
+              <option value="explosion">Explosion</option>
+              <option value="evolve">Evolve</option>
+              <option value="evolve2">Evolve 2</option>
+              <option value="fractal">Fractal</option>
+              <option value="xenakis">Xenakids</option>
+              <option value="rorschach">Rorbach</option>
+              <option value="overtone">Overtone</option>
+              <option value="fm">DX7</option>
+              <option value="chord">Chord</option>
+            </select>
+
+            <div class="modify-panel" id="modifyPanel">
+              <div class="modify-panel__head">
+                <span class="tools-row-label">MODIFY</span>
+                <div class="fx-power" id="modifyPanelLed"></div>
+              </div>
+              <div class="modify-panel__body">
+                <div class="modify-size-row">
+                  <span class="tools-row-label modify-size-row__label">SIZE</span>
+                  <input id="brushSizeSlider" class="slider slider--tools slider--tools-inline" type="range" min="1" max="20" value="5">
+                </div>
+              <div class="modify-content modify-content--fractal" id="modifyFractalPanel">
+                <div class="fx-knobs">
+                  <div class="knob-wrap"><div class="knob modify-knob" data-mod="fractal-chaos" data-val="0.0"></div><span class="knob-lbl">CHAOS</span></div>
+                  <div class="knob-wrap"><div class="knob modify-knob" data-mod="fractal-morph" data-val="0.0"></div><span class="knob-lbl">MORPH</span></div>
+                </div>
+              </div>
+              <div class="modify-content modify-content--calligraphy" id="modifyCalligraphyPanel">
+                <div class="fx-knobs">
+                  <div class="knob-wrap"><div class="knob modify-knob" data-mod="calligraphy-angle" data-val="0.25"></div><span class="knob-lbl">ANGLE</span></div>
+                  <div class="knob-wrap"><div class="knob modify-knob" data-mod="calligraphy-contrast" data-val="0.5"></div><span class="knob-lbl">CONTR</span></div>
+                </div>
+              </div>
+              <div class="modify-content modify-content--explosion" id="modifyExplosionPanel">
+                <div class="fx-knobs">
+                  <div class="knob-wrap"><div class="knob modify-knob" data-mod="explosion-length" data-val="0.55"></div><span class="knob-lbl">LENGTH</span></div>
+                  <div class="knob-wrap"><div class="knob modify-knob" data-mod="explosion-burst" data-val="0.45"></div><span class="knob-lbl">BURST</span></div>
+                </div>
+              </div>
+              <div class="modify-content modify-content--evolve" id="modifyEvolvePanel">
+                <div class="fx-knobs">
+                  <div class="knob-wrap"><div class="knob modify-knob" data-mod="evolve-length" data-val="0.55"></div><span class="knob-lbl">LENGTH</span></div>
+                  <div class="knob-wrap"><div class="knob modify-knob" data-mod="evolve-branch" data-val="0.45"></div><span class="knob-lbl">BRANCH</span></div>
+                </div>
+              </div>
+              <div class="modify-content modify-content--chord" id="chordSelectRow">
+                <select id="chordSelect" class="select-btn" style="width: 100%;">
+                  <option value="major">Chord: Major</option>
+                  <option value="minor">Chord: Minor</option>
+                  <option value="sus4">Chord: Sus4</option>
+                  <option value="dim">Chord: Diminished</option>
+                </select>
+              </div>
+              <div class="modify-content modify-content--empty" id="modifyEmptyPanel">
+                <span class="tools-row-label">No modifiers</span>
+              </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel-divider"></div>
+
+      <div class="target-pad-cluster">
+        <div class="perf-col" id="trace-module">
+          <span class="block-label">Target</span>
+          <div class="perf-buttons">
+            <button class="track-swatch-btn swatch-sm--pink picker-btn active" data-target="0">T1</button>
+            <button class="track-swatch-btn swatch-sm--cyan picker-btn" data-target="1">T2</button>
+            <button class="track-swatch-btn swatch-sm--yellow picker-btn" data-target="2">T3</button>
+            <button class="track-swatch-btn swatch-sm--green picker-btn" data-target="3">T4</button>
+          </div>
+        </div>
+
+        <div class="poke-grid-outer" id="trace-pad">
+          <span class="poke-label pad-hint">X/Y</span>
+          <button id="traceClearBtn" style="position:absolute; bottom:5px; right:5px; z-index:100; font-size:9px; padding:2px 4px; display:none;">CLEAR</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel-divider panel-divider--fx"></div>
+
+    <div class="fx-area" id="fx-rack">
+      <div class="fx-mod fx-unit">
+        <div class="fx-mod__head"><span class="fx-mod__name fx-header">Delay</span><div class="fx-power led"></div></div>
+        <div class="fx-mod__body">
+          <div class="fx-track-grid fx-matrix">
+            <button class="fx-track-dot fx-track-dot--pink matrix-btn" data-track="0"></button>
+            <button class="fx-track-dot fx-track-dot--cyan matrix-btn" data-track="1"></button>
+            <button class="fx-track-dot fx-track-dot--yellow matrix-btn" data-track="2"></button>
+            <button class="fx-track-dot fx-track-dot--green matrix-btn" data-track="3"></button>
+          </div>
+          <button class="btn--xy fx-xy-link">X/Y</button>
+          <div class="fx-knobs">
+            <div class="knob-wrap knob-group"><div class="knob" data-val="0.5"></div><span class="knob-lbl">TIME</span></div>
+            <div class="knob-wrap knob-group"><div class="knob" data-val="0.3"></div><span class="knob-lbl">FDBK</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fx-mod fx-unit">
+        <div class="fx-mod__head"><span class="fx-mod__name fx-header">Reverb</span><div class="fx-power led"></div></div>
+        <div class="fx-mod__body">
+          <div class="fx-track-grid fx-matrix">
+            <button class="fx-track-dot fx-track-dot--pink matrix-btn" data-track="0"></button>
+            <button class="fx-track-dot fx-track-dot--cyan matrix-btn" data-track="1"></button>
+            <button class="fx-track-dot fx-track-dot--yellow matrix-btn" data-track="2"></button>
+            <button class="fx-track-dot fx-track-dot--green matrix-btn" data-track="3"></button>
+          </div>
+          <button class="btn--xy fx-xy-link">X/Y</button>
+          <div class="fx-knobs">
+            <div class="knob-wrap knob-group"><div class="knob" data-val="0.6"></div><span class="knob-lbl">DECAY</span></div>
+            <div class="knob-wrap knob-group"><div class="knob" data-val="0.2"></div><span class="knob-lbl">MIX</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fx-mod fx-unit">
+        <div class="fx-mod__head"><span class="fx-mod__name fx-header">Vibrato</span><div class="fx-power led"></div></div>
+        <div class="fx-mod__body">
+          <div class="fx-track-grid fx-matrix">
+            <button class="fx-track-dot fx-track-dot--pink matrix-btn" data-track="0"></button>
+            <button class="fx-track-dot fx-track-dot--cyan matrix-btn" data-track="1"></button>
+            <button class="fx-track-dot fx-track-dot--yellow matrix-btn" data-track="2"></button>
+            <button class="fx-track-dot fx-track-dot--green matrix-btn" data-track="3"></button>
+          </div>
+          <button class="btn--xy fx-xy-link">X/Y</button>
+          <div class="fx-knobs">
+            <div class="knob-wrap knob-group"><div class="knob" data-val="0.4"></div><span class="knob-lbl">RATE</span></div>
+            <div class="knob-wrap knob-group"><div class="knob" data-val="0.5"></div><span class="knob-lbl">DEPTH</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fx-mod fx-unit">
+        <div class="fx-mod__head"><span class="fx-mod__name fx-header">Filter</span><div class="fx-power led"></div></div>
+        <div class="fx-mod__body">
+          <div class="fx-track-grid fx-matrix">
+            <button class="fx-track-dot fx-track-dot--pink matrix-btn" data-track="0"></button>
+            <button class="fx-track-dot fx-track-dot--cyan matrix-btn" data-track="1"></button>
+            <button class="fx-track-dot fx-track-dot--yellow matrix-btn" data-track="2"></button>
+            <button class="fx-track-dot fx-track-dot--green matrix-btn" data-track="3"></button>
+          </div>
+          <button class="btn--xy fx-xy-link">X/Y</button>
+          <div class="fx-knobs">
+            <div class="knob-wrap knob-group"><div class="knob" data-val="1.0"></div><span class="knob-lbl">FREQ</span></div>
+            <div class="knob-wrap knob-group"><div class="knob" data-val="0.0"></div><span class="knob-lbl">RES</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fx-mod fx-unit">
+        <div class="fx-mod__head"><span class="fx-mod__name fx-header">Stutter</span><div class="fx-power led"></div></div>
+        <div class="fx-mod__body">
+          <div class="fx-track-grid fx-matrix">
+            <button class="fx-track-dot fx-track-dot--pink matrix-btn" data-track="0"></button>
+            <button class="fx-track-dot fx-track-dot--cyan matrix-btn" data-track="1"></button>
+            <button class="fx-track-dot fx-track-dot--yellow matrix-btn" data-track="2"></button>
+            <button class="fx-track-dot fx-track-dot--green matrix-btn" data-track="3"></button>
+          </div>
+          <button class="btn--xy fx-xy-link">X/Y</button>
+          <div class="fx-knobs">
+            <div class="knob-wrap knob-group"><div class="knob" data-val="0.5"></div><span class="knob-lbl">RATE</span></div>
+            <div class="knob-wrap knob-group"><div class="knob" data-val="0.0"></div><span class="knob-lbl">MIX</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fx-mod fx-unit">
+        <div class="fx-mod__head"><span class="fx-mod__name fx-header">Tape Stop</span><div class="fx-power led"></div></div>
+        <div class="fx-mod__body">
+          <div class="fx-track-grid fx-matrix">
+            <button class="fx-track-dot fx-track-dot--pink matrix-btn" data-track="0"></button>
+            <button class="fx-track-dot fx-track-dot--cyan matrix-btn" data-track="1"></button>
+            <button class="fx-track-dot fx-track-dot--yellow matrix-btn" data-track="2"></button>
+            <button class="fx-track-dot fx-track-dot--green matrix-btn" data-track="3"></button>
+          </div>
+          <button class="btn--xy fx-enable-btn fx-enable-btn--tapestop">TRG</button>
+          <div class="fx-knobs">
+            <div class="knob-wrap knob-group"><div class="knob" data-val="0.55"></div><span class="knob-lbl">STOP</span></div>
+            <div class="knob-wrap knob-group"><div class="knob" data-val="0.35"></div><span class="knob-lbl">START</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer class="control-bar" id="controls">
+
+    <section class="control-bar__left control-section">
+      <span class="control-bar__label">Control</span>
+      <div class="control-bar__body">
+        <div class="ctrl-meta-grid">
+          <div class="tempo-wrap">
+            <span>Tempo</span>
+            <input id="bpmInput" class="tempo-box" type="number" min="40" max="240" value="120" style="border:none; outline:none; text-align:center;">
+          </div>
+          <button id="extSyncBtn" class="btn--ext-sync">EXT SYNC</button>
+          <select id="midiInputSelect" disabled class="select-btn ext-sync-select"></select>
+          <label class="toggle-wrap">
+            <span>Loop</span>
+            <input type="checkbox" id="loopCheckbox" style="display:none" checked>
+            <span class="toggle-sq toggle-ui"></span>
+          </label>
+
+          <label class="toggle-wrap">
+            <span>Harmonize</span>
+            <input type="checkbox" id="harmonizeCheckbox" style="display:none">
+            <span class="toggle-sq toggle-ui"></span>
+          </label>
+          
+          <div id="scaleSelectContainer">
+            <select id="scaleSelect" class="select-btn">
+              <option value="major">Major</option>
+              <option value="minor">Minor</option>
+              <option value="pentatonic">Pentatonic</option>
+            </select>
+          </div>
+        </div>
+        <div class="ctrl-row-divider"></div>
+        <div class="ctrl-action-blocks">
+        
+        <div class="ctrl-block" style="flex-direction: row; gap: 8px;">
+          
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <button id="playButton" class="btn--ctrl btn--play" style="display: flex; justify-content: center; align-items: center; gap: 6px;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              PLAY
+            </button>
+            <button id="undoButton" class="btn--ctrl" style="padding: 0; display: flex; justify-content: center; align-items: center; gap: 6px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+              UNDO
+            </button>
+          </div>
+          
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <button id="stopButton" class="btn--ctrl" style="display: flex; justify-content: center; align-items: center; gap: 6px;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
+              STOP
+            </button>
+            <button id="clearButton" class="btn--ctrl" style="display: flex; justify-content: center; align-items: center; gap: 5px;">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+              CLEAR ALL
+            </button>
+          </div>
+          
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <button id="recButton" class="btn--ctrl btn--rec" style="display: flex; justify-content: center; align-items: center; gap: 6px;">
+              <span class="rec-dot"></span> REC
+            </button>
+            <button id="redoButton" class="btn--ctrl" style="padding: 0; display: flex; justify-content: center; align-items: center; gap: 6px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"></polyline><path d="M20.49 15a9 9 0 1 1-2.13-9.36L23 10"></path></svg>
+              REDO
+            </button>
+          </div>
+          
+        </div>
+
+        </div>
+      </div>
+    </section>
+
+    <div class="control-bar__v-divider" aria-hidden="true"></div>
+
+    <section class="pattern-bank memory-section" id="pattern-machine">
+      <div class="memory-section__head">
+        <span class="pattern-bank__title">Memory</span>
+      </div>
+      <div class="memory-section__body">
+        <div class="pattern-bank__presets">
+          <div class="pattern-bank__preset-group">
+            <span class="pattern-bank__group-label">Bank</span>
+            <div class="pattern-bank__preset-row">
+              <select id="presetBankSelect" class="select-btn pattern-bank__select pattern-bank__select--full"></select>
+            </div>
+            <div class="pattern-bank__preset-actions pattern-bank__preset-actions--triple">
+              <button id="importPresetBankButton" class="btn--ctrl pattern-bank__btn pattern-bank__btn--fixed">IMPORT BANK</button>
+              <button id="exportBankButton" class="btn--ctrl pattern-bank__btn pattern-bank__btn--fixed">EXPORT BANK</button>
+              <button id="loadPresetBankButton" class="btn--ctrl pattern-bank__btn pattern-bank__btn--fixed">LOAD BANK</button>
+            </div>
+          </div>
+          <div class="pattern-bank__preset-group">
+            <span class="pattern-bank__group-label">Slot</span>
+            <div class="pattern-bank__preset-actions pattern-bank__preset-actions--triple">
+              <button id="loadPresetPatternButton" class="btn--ctrl pattern-bank__btn pattern-bank__btn--fixed">LOAD SLOT</button>
+              <button id="exportPatternButton" class="btn--ctrl pattern-bank__btn pattern-bank__btn--fixed">EXPORT SLOT</button>
+              <button id="savePatternButton" class="btn--ctrl pattern-bank__btn pattern-bank__btn--fixed">SAVE SLOT</button>
+            </div>
+          </div>
+        </div>
+        <div class="pattern-bank__grid-wrap">
+          <div class="pattern-grid">
+            <span class="pat-row-lbl">A</span>
+            <button class="pat-btn pad pattern-btn" data-bank="A" data-idx="0"></button>
+            <button class="pat-btn pad pattern-btn" data-bank="A" data-idx="1"></button>
+            <button class="pat-btn pad pattern-btn" data-bank="A" data-idx="2"></button>
+            <button class="pat-btn pad pattern-btn" data-bank="A" data-idx="3"></button>
+
+            <span class="pat-row-lbl">B</span>
+            <button class="pat-btn pad pattern-btn" data-bank="B" data-idx="0"></button>
+            <button class="pat-btn pad pattern-btn" data-bank="B" data-idx="1"></button>
+            <button class="pat-btn pad pattern-btn" data-bank="B" data-idx="2"></button>
+            <button class="pat-btn pad pattern-btn" data-bank="B" data-idx="3"></button>
+
+            <span class="pat-row-lbl">C</span>
+            <button class="pat-btn pad pattern-btn" data-bank="C" data-idx="0"></button>
+            <button class="pat-btn pad pattern-btn" data-bank="C" data-idx="1"></button>
+            <button class="pat-btn pad pattern-btn" data-bank="C" data-idx="2"></button>
+            <button class="pat-btn pad pattern-btn" data-bank="C" data-idx="3"></button>
+
+            <span class="pat-row-lbl">D</span>
+            <button class="pat-btn pad pattern-btn" data-bank="D" data-idx="0"></button>
+            <button class="pat-btn pad pattern-btn" data-bank="D" data-idx="1"></button>
+            <button class="pat-btn pad pattern-btn" data-bank="D" data-idx="2"></button>
+            <button class="pat-btn pad pattern-btn" data-bank="D" data-idx="3"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="control-bar__v-divider" aria-hidden="true"></div>
+
+    <section class="quote-section" aria-label="No Future quote">
+      <div class="quote-section__head">
+        <span class="pattern-bank__aside-title">The Pigeon says</span>
+      </div>
+      <aside class="pattern-bank__quote">
+        <p class="pattern-bank__quote-text pattern-bank__quote-text--cure">MACHINE BUGGING YOU?</p>
+        <p class="pattern-bank__quote-text pattern-bank__quote-text--slaughter">LO(O)SING THE SIGNAL?</p>
+        <br>
+        <p class="pattern-bank__quote-meta">Let's not waste this moment on old men's greed again. Let's start with the obvious.</p>
+        <br>
+        <p class="pattern-bank__quote-text pattern-bank__quote-text--slaughter">CALL NOW!</p>
+        <p id="quoteCodeLine" class="pattern-bank__quote-code" data-hover-sound="46.m4a">46 55 43 4B 20 57 41 52</p>
+      </aside>
+    </section>
+  </footer>
+
+  <div class="legal-links">
+    <div class="legal-links__main">
+      <a href="datenschutz.html" target="_blank">Datenschutz</a> &nbsp;|&nbsp; 
+      <a href="impressum.html" target="_blank">Impressum</a> &nbsp;|&nbsp; 
+      &copy; 2026 thehumants.com &nbsp;|&nbsp; 
+      <a href="https://buymeacoffee.com/thepigeon.synthesizer" target="_blank" style="font-weight: bold; color: var(--color-pink);">BUY ME A COFFEE</a>
+    </div>
+    <button id="helpBtn" class="btn--help btn--help--footer">HELP</button>
+  </div>
+
+</div>
+
+<div id="help-overlay"></div>
+
+<button id="exportWavButton" style="display:none;" aria-hidden="true" tabindex="-1">EXPORT WAV</button>
+
+<div id="custom-eraser"></div>
+
+<div id="exportBusyOverlay" class="export-busy-overlay" aria-hidden="true">
+  <div class="export-busy-overlay__panel">
+    <div class="export-busy-overlay__spinner" aria-hidden="true"></div>
+    <div class="export-busy-overlay__text">Exporting WAV, please wait...</div>
+  </div>
+</div>
+
+<script src="canvas.js?v=20260310c" type="module"></script>
+<script src="audio.js?v=20260310c" type="module"></script>
+<script src="ui.js?v=20260310c" type="module"></script>
+<script src="midi.js?v=20260310c" type="module"></script>
+<script src="main.js?v=20260310c" type="module"></script>
+
+</body>
+</html>

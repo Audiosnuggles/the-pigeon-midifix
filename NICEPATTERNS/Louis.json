@@ -1,0 +1,2186 @@
+{
+  "current": {
+    "settings": {
+      "bpm": "240",
+      "loop": true,
+      "scale": "minor",
+      "harmonize": true
+    },
+    "fx": {
+      "delay": {
+        "time": 0.4,
+        "feedback": 0.4
+      },
+      "reverb": {
+        "mix": 0.5,
+        "decay": 0.6
+      },
+      "vibrato": {
+        "rate": 0.2,
+        "depth": 0.05
+      },
+      "filter": {
+        "freq": 1,
+        "res": 0
+      },
+      "stutter": {
+        "rate": 0.5,
+        "mix": 0
+      },
+      "fractal": {
+        "chaos": 0.5,
+        "morph": 0.5
+      },
+      "matrix": [
+        {
+          "delay": false,
+          "reverb": true,
+          "vibrato": false,
+          "filter": false,
+          "stutter": false
+        },
+        {
+          "delay": false,
+          "reverb": true,
+          "vibrato": false,
+          "filter": false,
+          "stutter": false
+        },
+        {
+          "delay": true,
+          "reverb": true,
+          "vibrato": false,
+          "filter": false,
+          "stutter": false
+        },
+        {
+          "delay": false,
+          "reverb": false,
+          "vibrato": false,
+          "filter": false,
+          "stutter": false
+        }
+      ]
+    },
+    "tracks": [
+      {
+        "segments": [
+          {
+            "brush": "standard",
+            "thickness": 6,
+            "points": [
+              {
+                "x": 0,
+                "y": 55,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 15,
+                "y": 55,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 6,
+            "points": [
+              {
+                "x": 23,
+                "y": 52,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 38,
+                "y": 52,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 6,
+            "points": [
+              {
+                "x": 47,
+                "y": 45,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 62,
+                "y": 45,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 6,
+            "points": [
+              {
+                "x": 70,
+                "y": 37,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 180,
+                "y": 37,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 6,
+            "points": [
+              {
+                "x": 188,
+                "y": 66,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 203,
+                "y": 66,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 6,
+            "points": [
+              {
+                "x": 211,
+                "y": 33,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 226,
+                "y": 33,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 6,
+            "points": [
+              {
+                "x": 234,
+                "y": 37,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 249,
+                "y": 37,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 6,
+            "points": [
+              {
+                "x": 258,
+                "y": 45,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 365,
+                "y": 45,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 6,
+            "points": [
+              {
+                "x": 375,
+                "y": 71,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 390,
+                "y": 71,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 6,
+            "points": [
+              {
+                "x": 398,
+                "y": 37,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 413,
+                "y": 37,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 6,
+            "points": [
+              {
+                "x": 422,
+                "y": 45,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 437,
+                "y": 45,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 6,
+            "points": [
+              {
+                "x": 445,
+                "y": 52,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 555,
+                "y": 52,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 6,
+            "points": [
+              {
+                "x": 563,
+                "y": 73,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 578,
+                "y": 73,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 6,
+            "points": [
+              {
+                "x": 586,
+                "y": 45,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 601,
+                "y": 45,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 6,
+            "points": [
+              {
+                "x": 609,
+                "y": 52,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 624,
+                "y": 52,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 6,
+            "points": [
+              {
+                "x": 633,
+                "y": 55,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 740,
+                "y": 55,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          }
+        ],
+        "vol": 0.85,
+        "mute": false,
+        "wave": "sine",
+        "snap": true,
+        "noiseQ": 6,
+        "lengthSteps": 32,
+        "gridSteps": 32
+      },
+      {
+        "segments": [
+          {
+            "brush": "standard",
+            "thickness": 8,
+            "points": [
+              {
+                "x": 70,
+                "y": 95,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 85,
+                "y": 95,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 8,
+            "points": [
+              {
+                "x": 117,
+                "y": 87,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 132,
+                "y": 87,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 8,
+            "points": [
+              {
+                "x": 164,
+                "y": 80,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 179,
+                "y": 80,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 8,
+            "points": [
+              {
+                "x": 258,
+                "y": 98,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 273,
+                "y": 98,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 8,
+            "points": [
+              {
+                "x": 305,
+                "y": 87,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 320,
+                "y": 87,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 8,
+            "points": [
+              {
+                "x": 352,
+                "y": 82,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 367,
+                "y": 82,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 8,
+            "points": [
+              {
+                "x": 445,
+                "y": 97,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 460,
+                "y": 97,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 8,
+            "points": [
+              {
+                "x": 492,
+                "y": 91,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 507,
+                "y": 91,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 8,
+            "points": [
+              {
+                "x": 539,
+                "y": 85,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 554,
+                "y": 85,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 8,
+            "points": [
+              {
+                "x": 633,
+                "y": 100,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 648,
+                "y": 100,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 8,
+            "points": [
+              {
+                "x": 680,
+                "y": 91,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 695,
+                "y": 91,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          },
+          {
+            "brush": "standard",
+            "thickness": 8,
+            "points": [
+              {
+                "x": 727,
+                "y": 86,
+                "rX": 0,
+                "rY": 0
+              },
+              {
+                "x": 742,
+                "y": 86,
+                "rX": 0,
+                "rY": 0
+              }
+            ]
+          }
+        ],
+        "vol": 0.8,
+        "mute": false,
+        "wave": "sine",
+        "snap": true,
+        "noiseQ": 6,
+        "lengthSteps": 32,
+        "gridSteps": 32
+      },
+      {
+        "segments": [],
+        "vol": 0.6,
+        "mute": false,
+        "wave": "sawtooth",
+        "snap": false,
+        "noiseQ": 6,
+        "lengthSteps": 32,
+        "gridSteps": 32
+      },
+      {
+        "segments": [],
+        "vol": 0,
+        "mute": true,
+        "wave": "sine",
+        "snap": false,
+        "noiseQ": 6,
+        "lengthSteps": 32,
+        "gridSteps": 32
+      }
+    ]
+  },
+  "banks": {
+    "A": [
+      {
+        "settings": {
+          "bpm": "240",
+          "loop": true,
+          "scale": "minor",
+          "harmonize": true
+        },
+        "fx": {
+          "delay": {
+            "time": 0.4,
+            "feedback": 0.4
+          },
+          "reverb": {
+            "mix": 0.5,
+            "decay": 0.6
+          },
+          "vibrato": {
+            "rate": 0.2,
+            "depth": 0.05
+          },
+          "filter": {
+            "freq": 1,
+            "res": 0
+          },
+          "stutter": {
+            "rate": 0.5,
+            "mix": 0
+          },
+          "fractal": {
+            "chaos": 0.5,
+            "morph": 0.5
+          },
+          "matrix": [
+            {
+              "delay": false,
+              "reverb": true,
+              "vibrato": false,
+              "filter": false,
+              "stutter": false
+            },
+            {
+              "delay": false,
+              "reverb": true,
+              "vibrato": false,
+              "filter": false,
+              "stutter": false
+            },
+            {
+              "delay": true,
+              "reverb": true,
+              "vibrato": false,
+              "filter": false,
+              "stutter": false
+            },
+            {
+              "delay": false,
+              "reverb": false,
+              "vibrato": false,
+              "filter": false,
+              "stutter": false
+            }
+          ]
+        },
+        "tracks": [
+          {
+            "segments": [
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 0,
+                    "y": 37,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 15,
+                    "y": 37,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 23,
+                    "y": 41,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 38,
+                    "y": 41,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 47,
+                    "y": 37,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 62,
+                    "y": 37,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 70,
+                    "y": 55,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 85,
+                    "y": 55,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 94,
+                    "y": 45,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 109,
+                    "y": 45,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 117,
+                    "y": 52,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 132,
+                    "y": 52,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 141,
+                    "y": 61,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 156,
+                    "y": 61,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 164,
+                    "y": 80,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 179,
+                    "y": 80,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 188,
+                    "y": 73,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 203,
+                    "y": 73,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 211,
+                    "y": 61,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 226,
+                    "y": 61,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 234,
+                    "y": 55,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 249,
+                    "y": 55,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 258,
+                    "y": 73,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 273,
+                    "y": 73,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 281,
+                    "y": 63,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 296,
+                    "y": 63,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 305,
+                    "y": 55,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 320,
+                    "y": 55,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 328,
+                    "y": 52,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 343,
+                    "y": 52,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 352,
+                    "y": 73,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 367,
+                    "y": 73,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 375,
+                    "y": 37,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 390,
+                    "y": 37,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 398,
+                    "y": 41,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 413,
+                    "y": 41,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 422,
+                    "y": 37,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 437,
+                    "y": 37,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 445,
+                    "y": 55,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 460,
+                    "y": 55,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 469,
+                    "y": 45,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 484,
+                    "y": 45,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 492,
+                    "y": 52,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 507,
+                    "y": 52,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 516,
+                    "y": 61,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 531,
+                    "y": 61,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 539,
+                    "y": 80,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 554,
+                    "y": 80,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 563,
+                    "y": 73,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 578,
+                    "y": 73,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 586,
+                    "y": 61,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 601,
+                    "y": 61,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 609,
+                    "y": 55,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 624,
+                    "y": 55,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 633,
+                    "y": 73,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 648,
+                    "y": 73,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 656,
+                    "y": 52,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 671,
+                    "y": 52,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 680,
+                    "y": 55,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 695,
+                    "y": 55,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 703,
+                    "y": 61,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 718,
+                    "y": 61,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              }
+            ],
+            "vol": 0.85,
+            "mute": false,
+            "wave": "sine",
+            "snap": true,
+            "noiseQ": 6,
+            "lengthSteps": 32,
+            "gridSteps": 32
+          },
+          {
+            "segments": [
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 141,
+                    "y": 97,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 156,
+                    "y": 97,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 164,
+                    "y": 91,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 179,
+                    "y": 91,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 188,
+                    "y": 85,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 203,
+                    "y": 85,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 234,
+                    "y": 99,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 249,
+                    "y": 99,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 258,
+                    "y": 91,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 273,
+                    "y": 91,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 281,
+                    "y": 86,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 296,
+                    "y": 86,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 328,
+                    "y": 97,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 343,
+                    "y": 97,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 352,
+                    "y": 91,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 367,
+                    "y": 91,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 516,
+                    "y": 97,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 531,
+                    "y": 97,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 539,
+                    "y": 91,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 554,
+                    "y": 91,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 563,
+                    "y": 85,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 578,
+                    "y": 85,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 609,
+                    "y": 99,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 624,
+                    "y": 99,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 633,
+                    "y": 91,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 648,
+                    "y": 91,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 656,
+                    "y": 86,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 671,
+                    "y": 86,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 703,
+                    "y": 97,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 718,
+                    "y": 97,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              }
+            ],
+            "vol": 0.8,
+            "mute": false,
+            "wave": "sine",
+            "snap": true,
+            "noiseQ": 6,
+            "lengthSteps": 32,
+            "gridSteps": 32
+          },
+          {
+            "segments": [],
+            "vol": 0.6,
+            "mute": false,
+            "wave": "sawtooth",
+            "snap": false,
+            "noiseQ": 6,
+            "lengthSteps": 32,
+            "gridSteps": 32
+          },
+          {
+            "segments": [],
+            "vol": 0,
+            "mute": true,
+            "wave": "sine",
+            "snap": false,
+            "noiseQ": 6,
+            "lengthSteps": 32,
+            "gridSteps": 32
+          }
+        ]
+      },
+      {
+        "settings": {
+          "bpm": "240",
+          "loop": true,
+          "scale": "minor",
+          "harmonize": true
+        },
+        "fx": {
+          "delay": {
+            "time": 0.4,
+            "feedback": 0.4
+          },
+          "reverb": {
+            "mix": 0.5,
+            "decay": 0.6
+          },
+          "vibrato": {
+            "rate": 0.2,
+            "depth": 0.05
+          },
+          "filter": {
+            "freq": 1,
+            "res": 0
+          },
+          "stutter": {
+            "rate": 0.5,
+            "mix": 0
+          },
+          "fractal": {
+            "chaos": 0.5,
+            "morph": 0.5
+          },
+          "matrix": [
+            {
+              "delay": false,
+              "reverb": true,
+              "vibrato": false,
+              "filter": false,
+              "stutter": false
+            },
+            {
+              "delay": false,
+              "reverb": true,
+              "vibrato": false,
+              "filter": false,
+              "stutter": false
+            },
+            {
+              "delay": true,
+              "reverb": true,
+              "vibrato": false,
+              "filter": false,
+              "stutter": false
+            },
+            {
+              "delay": false,
+              "reverb": false,
+              "vibrato": false,
+              "filter": false,
+              "stutter": false
+            }
+          ]
+        },
+        "tracks": [
+          {
+            "segments": [
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 0,
+                    "y": 55,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 15,
+                    "y": 55,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 23,
+                    "y": 52,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 38,
+                    "y": 52,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 47,
+                    "y": 45,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 62,
+                    "y": 45,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 70,
+                    "y": 37,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 180,
+                    "y": 37,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 188,
+                    "y": 66,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 203,
+                    "y": 66,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 211,
+                    "y": 33,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 226,
+                    "y": 33,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 234,
+                    "y": 37,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 249,
+                    "y": 37,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 258,
+                    "y": 45,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 365,
+                    "y": 45,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 375,
+                    "y": 71,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 390,
+                    "y": 71,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 398,
+                    "y": 37,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 413,
+                    "y": 37,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 422,
+                    "y": 45,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 437,
+                    "y": 45,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 445,
+                    "y": 52,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 555,
+                    "y": 52,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 563,
+                    "y": 73,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 578,
+                    "y": 73,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 586,
+                    "y": 45,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 601,
+                    "y": 45,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 609,
+                    "y": 52,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 624,
+                    "y": 52,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 6,
+                "points": [
+                  {
+                    "x": 633,
+                    "y": 55,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 740,
+                    "y": 55,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              }
+            ],
+            "vol": 0.85,
+            "mute": false,
+            "wave": "sine",
+            "snap": true,
+            "noiseQ": 6,
+            "lengthSteps": 32,
+            "gridSteps": 32
+          },
+          {
+            "segments": [
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 70,
+                    "y": 95,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 85,
+                    "y": 95,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 117,
+                    "y": 87,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 132,
+                    "y": 87,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 164,
+                    "y": 80,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 179,
+                    "y": 80,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 258,
+                    "y": 98,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 273,
+                    "y": 98,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 305,
+                    "y": 87,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 320,
+                    "y": 87,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 352,
+                    "y": 82,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 367,
+                    "y": 82,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 445,
+                    "y": 97,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 460,
+                    "y": 97,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 492,
+                    "y": 91,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 507,
+                    "y": 91,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 539,
+                    "y": 85,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 554,
+                    "y": 85,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 633,
+                    "y": 100,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 648,
+                    "y": 100,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 680,
+                    "y": 91,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 695,
+                    "y": 91,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              },
+              {
+                "brush": "standard",
+                "thickness": 8,
+                "points": [
+                  {
+                    "x": 727,
+                    "y": 86,
+                    "rX": 0,
+                    "rY": 0
+                  },
+                  {
+                    "x": 742,
+                    "y": 86,
+                    "rX": 0,
+                    "rY": 0
+                  }
+                ]
+              }
+            ],
+            "vol": 0.8,
+            "mute": false,
+            "wave": "sine",
+            "snap": true,
+            "noiseQ": 6,
+            "lengthSteps": 32,
+            "gridSteps": 32
+          },
+          {
+            "segments": [],
+            "vol": 0.6,
+            "mute": false,
+            "wave": "sawtooth",
+            "snap": false,
+            "noiseQ": 6,
+            "lengthSteps": 32,
+            "gridSteps": 32
+          },
+          {
+            "segments": [],
+            "vol": 0,
+            "mute": true,
+            "wave": "sine",
+            "snap": false,
+            "noiseQ": 6,
+            "lengthSteps": 32,
+            "gridSteps": 32
+          }
+        ]
+      },
+      null,
+      null
+    ],
+    "B": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "C": [
+      null,
+      null,
+      null,
+      null
+    ],
+    "D": [
+      null,
+      null,
+      null,
+      null
+    ]
+  }
+}
