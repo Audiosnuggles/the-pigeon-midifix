@@ -34,9 +34,27 @@ function clearNextLoopSchedule() {
 function killPreScheduledFutureTrackGraph() {
     if (nextLoopScheduledFor === null) return;
     tracks.forEach(track => {
+        if (track?.scheduledGainNode) {
+            try { track.scheduledGainNode.disconnect(); } catch (e) {}
+            track.scheduledGainNode = null;
+            track.scheduledGainStartTime = NaN;
+            return;
+        }
         if (!track?.gainNode) return;
         try { track.gainNode.disconnect(); } catch (e) {}
         track.gainNode = null;
+    });
+}
+
+function promoteScheduledTrackGraph() {
+    tracks.forEach(track => {
+        if (!track?.scheduledGainNode) return;
+        if (track.gainNode && track.gainNode !== track.scheduledGainNode) {
+            try { track.gainNode.disconnect(); } catch (e) {}
+        }
+        track.gainNode = track.scheduledGainNode;
+        track.scheduledGainNode = null;
+        track.scheduledGainStartTime = NaN;
     });
 }
 
@@ -2762,7 +2780,18 @@ function scheduleTracks(start, targetCtx = audioCtx, targetDest = masterGain, of
             && segmentExtents.some(ext => ext.maxX >= seamEndThreshold);
         
         if (targetCtx === audioCtx) { 
-            if (track === tracks[outputTrackIndex]) track.gainNode = trkG; 
+            if (track === tracks[outputTrackIndex]) {
+                const isFutureGraph = Number.isFinite(start) && Number.isFinite(audioCtx?.currentTime) && start > (audioCtx.currentTime + 0.02);
+                if (isFutureGraph) {
+                    if (track.scheduledGainNode && track.scheduledGainNode !== trkG) {
+                        try { track.scheduledGainNode.disconnect(); } catch (e) {}
+                    }
+                    track.scheduledGainNode = trkG;
+                    track.scheduledGainStartTime = start;
+                } else {
+                    track.gainNode = trkG;
+                }
+            }
             connectTrackToFX(trkG, outputTrackIndex); 
         } else if (offlineFX) { 
             const isBypassed = !!track.bp;
@@ -2935,11 +2964,8 @@ function scheduleTracks(start, targetCtx = audioCtx, targetDest = masterGain, of
                         const endsAtLoopEnd =
                             (tfPairs[tfPairs.length - 1].cX >= seamEndThreshold) ||
                             ((cycleStart + trackDuration - eT) <= seamStartTimeTolerance);
-                        const seamFade = 0.006;
                         if (hasLoopSeamContinuity && startsAtLoopStart) {
-                            // Fast micro-fade avoids click while keeping seam continuity.
-                            g.gain.setValueAtTime(0, sT);
-                            g.gain.linearRampToValueAtTime(maxVol, Math.min(sT + seamFade, eT));
+                            g.gain.setValueAtTime(maxVol, sT);
                         } else {
                             g.gain.setValueAtTime(0, sT); 
                             g.gain.linearRampToValueAtTime(maxVol, sT + 0.02);
@@ -2947,7 +2973,8 @@ function scheduleTracks(start, targetCtx = audioCtx, targetDest = masterGain, of
                         g.gain.setValueAtTime(maxVol, eT); 
                         if (hasLoopSeamContinuity && endsAtLoopEnd) {
                             const loopBoundary = Math.min(cycleStart + trackDuration, globalEnd);
-                            g.gain.linearRampToValueAtTime(0, Math.max(eT, loopBoundary));
+                            g.gain.setValueAtTime(maxVol, loopBoundary);
+                            g.gain.linearRampToValueAtTime(0, loopBoundary + 0.01);
                         } else {
                             g.gain.linearRampToValueAtTime(0, Math.min(eT + 0.1, globalEnd));
                         }
@@ -3748,7 +3775,14 @@ function setupMainControls() {
         activeNodes.forEach(n => { try { n.stop(); n.disconnect(); } catch (e) { } });
         activeNodes.clear(); 
         activeWaveShapers = []; 
-        tracks.forEach(t => { if(t.gainNode) t.gainNode.disconnect(); redrawTrack(t, undefined, brushSelect.value, chordIntervals, chordColors); });
+        tracks.forEach(t => {
+            if (t.gainNode) t.gainNode.disconnect();
+            if (t.scheduledGainNode) t.scheduledGainNode.disconnect();
+            t.gainNode = null;
+            t.scheduledGainNode = null;
+            t.scheduledGainStartTime = NaN;
+            redrawTrack(t, undefined, brushSelect.value, chordIntervals, chordColors);
+        });
         pigeonImg.style.transform = "scale(1)"; 
         document.querySelectorAll(".pad.queued").forEach(p => p.classList.remove("queued")); 
     });
@@ -4146,6 +4180,8 @@ function loop() {
             transportElapsed = getTransportElapsedTime(audioCtx.currentTime);
             if (patternChangedAtBoundary && hadPreScheduledForBoundary) {
                 killPreScheduledFutureTrackGraph();
+            } else if (hadPreScheduledForBoundary) {
+                promoteScheduledTrackGraph();
             }
             clearNextLoopSchedule();
             if (!hadPreScheduledForBoundary || patternChangedAtBoundary) {
