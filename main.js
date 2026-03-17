@@ -30,6 +30,15 @@ function clearNextLoopSchedule() {
     nextLoopScheduledBoundaryId = null;
 }
 
+function killPreScheduledFutureTrackGraph() {
+    if (nextLoopScheduledFor === null) return;
+    tracks.forEach(track => {
+        if (!track?.gainNode) return;
+        try { track.gainNode.disconnect(); } catch (e) {}
+        track.gainNode = null;
+    });
+}
+
 function getActiveMidiLoopTickSpan() {
     return Math.max(24, Math.round(Number(activeMidiLoopTickSpan) || getLoopTickSpanForSteps()));
 }
@@ -1685,6 +1694,7 @@ function queueLoadedBankPayload(data) {
     queuedPresetBank = data;
     queuedPattern = null;
     document.querySelectorAll(".pad.queued").forEach(p => p.classList.remove("queued"));
+    killPreScheduledFutureTrackGraph();
     // Prevent stale pre-scheduled material from being reused on the next boundary.
     clearNextLoopSchedule();
     return true;
@@ -3805,6 +3815,7 @@ function setupPads() {
 
             if (isPlaying) {
                 queuedPattern = { data: selectedPatternData, pad };
+                killPreScheduledFutureTrackGraph();
                 // Force next boundary to schedule from queued state, not from stale pre-schedule.
                 clearNextLoopSchedule();
                 document.querySelectorAll(".pad.queued").forEach(p => p.classList.remove("queued"));
