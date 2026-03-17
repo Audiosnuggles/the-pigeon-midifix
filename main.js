@@ -789,14 +789,14 @@ function getUpcomingLoopBoundaryTime() {
 }
 
 function getBoundaryProcessKey(boundaryInfo, boundaryId = null) {
-    if (Number.isFinite(boundaryInfo?.boundaryTick)) {
-        return `midi-tick:${Math.round(boundaryInfo.boundaryTick)}`;
-    }
     const rawId = String(boundaryId || boundaryInfo?.id || "");
     if (rawId.startsWith("midi:")) {
         const parts = rawId.split(":");
         const tick = Number(parts[parts.length - 1]);
         if (Number.isFinite(tick)) return `midi-tick:${Math.round(tick)}`;
+    }
+    if (Number.isFinite(boundaryInfo?.boundaryTick)) {
+        return `midi-tick:${Math.round(boundaryInfo.boundaryTick)}`;
     }
     return rawId || null;
 }
