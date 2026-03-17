@@ -4144,8 +4144,11 @@ function loop() {
             activeWaveShapers = [];
             elapsed = audioCtx.currentTime - playbackStartTime;
             transportElapsed = getTransportElapsedTime(audioCtx.currentTime);
+            if (patternChangedAtBoundary && hadPreScheduledForBoundary) {
+                killPreScheduledFutureTrackGraph();
+            }
             clearNextLoopSchedule();
-            if (!hadPreScheduledForBoundary) {
+            if (!hadPreScheduledForBoundary || patternChangedAtBoundary) {
                 scheduleTracks(
                     Math.max(playbackStartTime, audioCtx.currentTime + 0.003),
                     audioCtx,
@@ -4168,7 +4171,7 @@ function loop() {
     const targetTrack = tracks[currentTargetTrack];
     const targetLocalX = targetTrack ? getTrackHeadX(targetTrack, transportElapsed) : xGlobal;
     if (isTracing && !isEffectMode && traceCurrentSeg) { 
-        if (lastTraceTrackX !== null && targetLocalX < lastTraceTrackX) {
+        if (lastTraceTrackX !== null && targetLocalX < (lastTraceTrackX - 100)) {
             saveState();
             // Seam bridge: close previous segment at loop end and start new one at loop start
             // so held notes remain continuous after releasing live tracing.
